@@ -1,0 +1,653 @@
+\documentclass[UTF8]{ctexart}
+\CTEXsetup[format={\LARGE\bf}]{part} %设置标题左对齐
+\CTEXsetup[format={\Large\bf}]{section} %设置标题左对齐
+\CTEXsetup[format={\large\bf\raggedright}]{subsection} %设置二级标题左对齐
+\CTEXsetup[format={\normalsize\bf\raggedright}]{subsubsection} %设置三级标题左对齐
+
+\setlength\parskip{4pt} %设置段与段之间的垂直距离
+
+\usepackage{amsmath} % 美国数学会（American Mathematical Society）开发的数学公式宏包
+\usepackage{amsfonts} % 数学字母
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{geometry}
+\usepackage{color}
+\usepackage{latexsym}
+\usepackage{longtable}
+\usepackage{amssymb}
+\usepackage{verbatim}  %多行注释宏包， 然后在待注释的部分上加入 \begin{comment} ... \end{comment}
+\usepackage{cite}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    language=C,
+    numbers=left, 
+    numberstyle=\tiny,
+    basicstyle=\small,
+    keywordstyle= \color{ blue!100},
+    commentstyle= \color{red!100}, 
+    frame=shadowbox, % 阴影效果
+    rulesepcolor= \color{ red!20!green!20!blue!20} ,
+    escapeinside=``, % 英文分号中可写入中文
+    xleftmargin=1em,xrightmargin=2em, aboveskip=1em,
+    framexleftmargin=2em
+} 
+
+\geometry{left = 2 cm, right = 2 cm, top = 2 cm, bottom = 2 cm} %页边距设置
+
+\title{Face recognition with opencv}
+\author{周强}
+\date{\today}
+
+
+%----------------------------------------**常用功能模板**--------------------------------------------------------------%
+\begin{comment}
+
+%------------------------------------------文本排列----------------------------------------------------------%
+{itemize}命令对文本进行简单的排列，不是采用序号，而是实心圆点符号。
+这个命令需要和\item配合使用。作为演示，输入如下代码：
+\begin{itemize}
+	\item The direction $\angle {\bf g}$ of the gradient vector ${\bf g}$ is the direction in the N-D space along which the function $f({\bf x})$ increases  most rapidly.
+	\item The magnitude $|{\bf g}|$ of the gradient ${\bf g}$ is the rate of the  increment. 
+\end{itemize}
+%--------------------------------------------------------------------------------------------------------------%
+
+%------------------------------------------文本和公式添加颜色----------------------------------------------------------%
+导言区添加 \usepackage{color}
+1） 对文本添加颜色：
+	{ \color{red}{I love you} }
+2) 对公式添加颜色：
+	{ \color{red}{$a = b + c$} }
+%---------------------------------------------------------------------------------------------------------------------------------%
+
+%------------------------------------------引用文献----------------------------------------------------------%
+% 使用jabref管理文献
+打开方式： $ java -jar JabRef-3.8.2.jar
+
+% 第一步： 新建一个空白文档，比如 articles.bib ,该文档与当前.tex文件放在同一个目录下。 在文档里添加引用的文章的条目，比如
+@ARTICLE{Bouguet00pyramidalimplementation,
+    author = {Jean-yves Bouguet},
+    title = {Pyramidal implementation of the Lucas Kanade feature tracker},
+    journal = {Intel Corporation, Microprocessor Research Labs},
+    year = {2000}
+}
+% 第二步：在文档最后，\end{document}之前，添加如下
+	% bibliographystyle {plain}
+	% bibliography {articles}
+
+% 第三步： 文献中引用，如
+	% \cite{Bouguet00pyramidalimplementation}
+
+% 第四部： 按如下顺序编译四次： XeLaTex,  BibTex,  XeLaTex, XeLaTex 
+
+文献顺序：Bibtex 已自带有 8 种样式，分别如下（下面内容摘自 LaTeX 编辑部）：
+
+1. plain，按字母的顺序排列，比较次序为作者、年度和标题
+
+2. unsrt，样式同plain，只是按照引用的先后排序
+
+3. alpha，用作者名首字母+年份后两位作标号，以字母顺序排序
+
+4. abbrv，类似plain，将月份全拼改为缩写，更显紧凑：
+
+5. ieeetr，国际电气电子工程师协会期刊样式：
+
+6. acm，美国计算机学会期刊样式：
+
+7. siam，美国工业和应用数学学会期刊样式：
+
+8. apalike，美国心理学学会期刊样式：
+%-----------------------------------------------------------------------------------------------------------------%
+
+%---------------------------------------------------- 插入矩阵-------------------------------------------------------%
+\begin{matrix}	%不带括号
+	a_1	&	a_2	\\
+	a_3	&	a_4
+\end{matrix}
+
+\begin{bmatrix}	%带中括号
+	a_1	&	a_2	\\
+	a_3	&	a_4
+\end{bmatrix}
+
+\begin{vmatrix}	%两边竖线
+	a_1	&	a_2	\\
+	a_3	&	a_4
+\end{vmatrix}
+
+\begin{Vmatrix}	%两边双竖线
+	a_1	&	a_2	\\
+	a_3	&	a_4
+\end{Vmatrix}
+
+\begin{pmatrix}	%带圆括号
+	a_1	&	a_2	\\
+	a_3	&	a_4
+\end{pmatrix}
+
+\begin{Bmatrix}	%带大括号
+	a_1	&	a_2	\\
+	a_3	&	a_4
+\end{Bmatrix}
+%--------------------------------------------------------------------------------------------------------------------------%
+
+%------------------ 插入公式：带自动编号和引用标签-------------------------------------------------------%
+\begin{equation}
+	y_1^T E y_2 = 0	\label{eq:essential}
+\end{equation}
+%--------------------------------------------------------------------------------------------------------------------------%
+
+%------------------------------------------- 插入多行公式: 单个标号-------------------------------------------------------------------------------%
+%split环境用在equation数学环境里面，可以把一个数学公式拆分成多行，并且支持对齐
+\begin{equation}
+	\begin{split}
+		t_1^{\land} &= U \; R_Z(\frac{\pi}{2}) \; \sum \; U^T, \quad R_1 = U \; R_Z^T(\frac{\pi}{2}) \;  V^T \\
+		t_2^{\land} &= U \; R_Z(-\frac{\pi}{2}) \; \sum \; U^T, \quad R_2 = U \; R_Z^T(-\frac{\pi}{2}) \;  V^T
+	\end{split}
+\end{equation}
+%------------------------------------------------------------------------------------------------------------------------------------------------------------%
+
+%------------------------------------------- 插入多行公式: 多个标号-------------------------------------------------------------------------------%
+\begin{align} \\默认左右对齐等
+	R_{pos} &= R R_{pos}	\\
+	t_{pos} &= t_{pos} + t R_{pos}
+\end{align}
+
+\begin{gather} \\默认居中对齐
+	R_{pos} &= R R_{pos}	\\
+	t_{pos} &= t_{pos} + t R_{pos}
+\end{gather}
+%------------------------------------------------------------------------------------------------------------------------------------------------------------%
+
+%------------------ 插入图片模板----------------------------------------------------------------------------------%
+\begin{figure}[!h]
+	\centerline{\includegraphics[width=8cm]{loca_control_plan.png}}
+	\caption{攀爬机器人工作大纲（初拟）}
+	\label{fig:loca_ctrl_plan}
+\end{figure}
+
+图的引用： \ref{fig:loca_ctrl_plan} 
+%--------------------------------------------------------------------------------------------------------------------------%
+
+
+%--------------------------- 插入并排图片模板----------------------------------------------------------------------------------%
+并排摆放，共享标题
+当我们需要两幅图片并排摆放，并共享标题时，可以在 figure 环境中
+使用两个 \includegraphics 命令。
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics{left}
+	\includegraphics{right}
+	\caption{反清复明}
+\end{figure}
+%--------------------------------------------------------------------------------------------------------------------------%
+
+%------------------------------------------插入并排图片模板：各含标题---------------------------------------------------------%
+\begin{figure}[!h]
+	\centering
+	\begin{minipage}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[width=6cm]{./figures/edge_Sobel.png}
+		\caption{edge\_Sobel}
+	\end{minipage}
+	\qquad	\qquad 
+	\begin{minipage}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[width=6cm]{./figures/edge_Prewitt.png}
+		\caption{edge\_Prewitt}
+	\end{minipage}
+	% 空格，另起一行
+
+	\begin{minipage}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[width=6cm]{./figures/edge_DoG.png}
+		\caption{edge\_DoG}
+	\end{minipage}
+	\qquad	\qquad 
+	\begin{minipage}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[width=6cm]{./figures/edge_canny.png}
+		\caption{edge\_canny}
+	\end{minipage}
+\end{figure}
+%----------------------------------------------------------------------------------------------------------------------------------%
+
+%---------------------------------------------------插入python 高亮代码：-------------------------------------------------------------------------------%
+首先： https://github.com/olivierverdier/python-latex-highlighting
+	将下载的pythonhighlight.sty放到你的.tex文件所在的目录下
+
+The package is loaded by the following line:
+
+然后： \usepackage{pythonhighlight}
+
+最后，使用方法如下：
+\begin{python}
+def f(x):
+    return x
+\end{python}
+%----------------------------------------------------------------------------------------------------------------------------------%
+
+
+%---------------------------------------------------插入C++ 高亮代码：-------------------------------------------------------------------------------%
+首先在引言区添加：
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    language=C++,
+    numbers=left, 
+    numberstyle=\tiny,
+    basicstyle=\small,
+    keywordstyle= \color{ blue!100},
+    commentstyle= \color{red!100}, 
+    frame=shadowbox, % 阴影效果
+    rulesepcolor= \color{ red!20!green!20!blue!20} ,
+    escapeinside=``, % 英文分号中可写入中文
+    xleftmargin=2em,xrightmargin=2em, aboveskip=1em,
+    framexleftmargin=2em
+} 
+
+然后在正文：
+\begin{lstlisting}
+	代码
+\end{lstlisting}
+%----------------------------------------------------------------------------------------------------------------------------------%
+
+
+%------------------ 插入表格模板----------------------------------------------------------------------------------%
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{l}
+		\hline
+		\textbf{Algorithm CNN} $(img)$\textbf{:}	\\
+		\qquad	\textbf{return} $direction$	\\
+		\\
+		\hline
+		\\
+		\textbf{Algorithm Division\_estimate} $(img)$\textbf{:}	\\
+		\qquad	$U = 180^\circ, L = -180^\circ$		\\
+		\qquad	\textbf{while} $(U - L > 1^\circ)$	\textbf{do}	\\
+		\qquad \qquad	$M = (U + L) / 2$	\\
+		\qquad \qquad	$img\_r = \mathbf{Rotate\_image} (img, 90^\circ - M)$	\\
+		\qquad \qquad	$direction = \mathbf{CNN} (img\_r)$	\\
+		\qquad \qquad	\textbf{if} $(direction == Up)$ 	\\
+		\qquad \qquad \qquad	 $U = M$ 	\\
+		\qquad \qquad	\textbf{else} 	\\
+		\qquad \qquad \qquad $L = M$ 	\\
+		\qquad	\textbf{end while}		\\
+		\qquad \textbf{return} $(U + L) / 2$	\\	
+		\hline
+	\end{tabular}
+	\caption{攀爬机器人方向角测量算法}
+	\label{tbl:algorithm_1}
+\end{table}
+表格的引用： \ref{tbl:algorithm_1} 
+控制表格宽度： \begin{tabular}{|p{1cm}|p{2cm}|p{3cm}|}
+%--------------------------------------------------------------------------------------------------------------------------%
+
+
+%------------------------------------------------  绘制长直线  -------------------------------------------------------------------%
+\rule[水平高度]{长度}{粗细}
+
+例如：
+\rule[0.25\baselineskip]{\textwidth}{1pt}
+\rule[-10pt]{14.3cm}{0.05em}
+
+\baselineskip是单位 距离下面的距离
+%--------------------------------------------------------------------------------------------------------------------------%
+
+
+\end{comment}
+%----------------------------------------**常用功能模板**--------------------------------------------------------------%
+
+\begin{document}
+\maketitle %实际输出论文标题;
+\tableofcontents % 输出目录
+\newpage % 换页
+
+\section{Introduction}
+OpenCV（开源计算机视觉）是1999年由英特尔开发的流行的计算机视觉库。跨平台库将重点放在实时图像处理上，并且包括无专利的最新计算机视觉算法实现。 2008年，Willow Garage接手了支持，OpenCV 2.3.1现在配备了C，C ++，Python和Android的编程接口。 OpenCV根据BSD许可证发布，因此被用于学术项目和商业产品。
+
+OpenCV 2.4现在提供了面向人脸识别的全新FaceRecognizer类，因此您可以立即开始实验人脸识别。这份文件是我所期待的指导，当我自己进行人脸识别。它向您展示如何使用OpenCV中的FaceRecognizer执行人脸识别（具有完整的源代码清单），并为您介绍后面的算法。我还将展示如何创建可以在许多出版物中找到的可视化，因为很多人都要求。
+
+目前可用的算法有：
+\begin{itemize}
+     \item 特征脸（请参阅 createEigenFaceRecognizer）
+     \item Fisherfaces（请参阅 createFisherFaceRecognizer）
+     \item 本地二进制模式直方图（请参阅 createLBPHFaceRecognizer）
+\end{itemize}
+
+您不需要从此页面复制和粘贴源代码示例，因为它们在本文档附带的src文件夹中可用。 如果您已打开OpenCV打开样品，那么您已经编译好的机会很好！ 虽然对于非常高级的用户来说，这可能是有趣的，但我决定将实施细节放在外面，因为我们担心会混淆新用户。
+
+本文档中的所有代码均以BSD许可证发布，因此请随时将其用于您的项目。
+
+\section{人脸识别}
+人脸识别对人类而言是一项容易的任务。 实验表明，即使一到三天的婴儿也能够区分已知的面孔。那么电脑有多难？事实证明，到目前为止，我们对于人类如何进行识别了解很少。内部特征（眼睛，鼻子，嘴巴）或外部特征（头部形状，发际线）是否用于成功的脸部识别？我们如何分析图像，大脑如何编码？ David Hubel和Torsten Wiesel表明，我们的大脑具有响应于场景的特定局部特征（如线条，边缘，角度或运动）的特殊神经细胞。由于我们看不到这个世界是分散的，我们的视觉皮层必须以不同的方式将不同的信息来源组合成有用的模式。自动人脸识别是关于从图像中提取有意义的特征，将其置于有用的表示中并对其进行某种分类。
+
+基于面部几何特征的人脸识别可能是最直观的面部识别方法。 \cite{Kanade1973}中描述了第一个自动人脸识别系统之一：标记点（眼睛，耳朵，鼻子，...的位置）用于构建特征向量（点之间的距离，它们之间的角度，... ）。通过计算待判断图像的特征向量与参考图像之间的欧氏距离来进行识别。这种方法对于照明的性质而言是可靠的，但是具有巨大的缺点：即使使用现有技术的算法，标记点的精确配准也是复杂的。
+
+\cite{Turk1991}中描述的特征脸（Eigenfaces）方法采用了整体的人脸识别方法：面部图像是高维图像空间的一个点，找到了其较低维度的表示方式，使得分类变得容易。使用主成分分析找到低维子空间，主成分分析识别具有最大方差的轴。虽然从重建的角度来看，这种转型是最佳的，但并没有考虑任何类标签信息。想象一下，如果是外部来源导致了较大的方差，比如光照变化。具有最大方差的轴根本不一定包含任何判别信息，因此不可能进行分类。因此，采用线性判别分析的类特定投影开始应用于人脸识别\cite{Belhumeur1997}。基本思想是最小化类内的方差，同时最大化类之间的方差。
+
+最近出现了用于局部特征提取的各种方法。为了避免输入数据的高维度，仅描绘图像的局部区域，所提取的特征（有希望地）对于部分遮挡，照明和小样本大小更有效。用于局部特征提取的算法是Gabor小波\cite{Wiskott1997}，离散余弦变换\cite{Messer2005}和局部二进制模式\cite{Ahonen2004}。这仍然是一个开放的研究问题：当应用局部特征提取时，保留空间信息的最佳方式是什么？因为空间信息是潜在有用的信息。
+
+\section{人脸图像数据集}
+让我们先来一些数据进行实验。我不想在这里做一个玩具的例子。我们正在做人脸识别，所以你需要一些脸部图像！您可以创建自己的数据集，或者从一个可用的人脸数据集开始，http://face-rec.org/databases/ 提供最新的概述。三个有趣的数据库（部分描述来自http://face-rec.org）是：
+\begin{itemize}
+    	\item {\color{blue}{AT＆T Facedatabase}} \; AT＆T Facedatabase有时也被称为ORL数据库面，包含40个不同主题中的每一个的十个不同的图像。对于某些科目，图像在不同时间拍摄，改变照明，面部表情（开放/闭合的眼睛，微笑/不微笑）和面部细节（眼镜/无眼镜）。所有的图像都是针对黑暗均匀的背景拍摄，受试者处于直立的正面位置（对于某些侧面运动具有容忍性）。
+    	\item {\color{blue}{Yale Facedatabase A}} ，\; 也称为Yalefaces。 AT＆T Facedatabase适用于初始测试，但它是一个相当简单的数据库。 Eigenfaces方法已经具有97％的识别率，所以你不会看到其他算法有很大的改进。 Yale Facedatabase A（也称为Yalefaces）是初步实验的更合适的数据集，因为识别问题更难。数据库由15人（14男，1女）组成，每个人拥有11个灰度图像，尺寸为320×243像素。光照条件（中心光，左光，右光），面部表情（快乐，正常，悲伤，困倦，惊讶，眨眼）和眼镜（眼镜，无眼镜）都有变化。
+
+    原始图像不被裁剪和对齐。请查看附录中的Python脚本，这是为您做的。
+
+    	\item {\color{blue}{Extended Yale Facedatabase B }} \; 扩展的耶鲁大学数据库B包含38个不同人的裁剪版本的2414图像。该数据库的重点放在提取对照明强大的特征，图像几乎没有情感/遮挡的变化。我个人认为，这个数据集对于我在本文档中执行的实验来说太大了。您最好使用AT＆T Facedatabase进行初步测试。在\cite{Belhumeur1997}中使用了耶鲁Facedatabase B的第一个版本，以了解特征面和Fisherfaces方法在重度照明变化下的性能。 \cite{Lee2005}使用相同的设置来拍摄16128张28人的图像。扩展耶鲁Facedatabase B是两个数据库的合并，这两个数据库现在称为扩展Yalefacedatabase B.
+\end{itemize}
+
+\subsection{准备数据}
+一旦我们获得了一些数据，我们将需要在我们的程序中读取。在演示应用程序中，我决定从非常简单的CSV文件读取图像。为什么？因为它是最简单的平台无关的方法，我可以想到。但是，如果你知道一个更简单的解决方案，请给我看看。基本上CSV文件都需要包含一个文件名，后跟一个;后面是标签（作为整数），组成一行如下：
+
+\begin{tabular}{|l|}
+	\hline
+	/path/to/image.ext; 0 \\
+	\hline
+\end{tabular}
+
+让我们剖析一下。 /path/to/image.ext是图像的路径，如果您在Windows中，可能是这样的：C：/faces/person0/image0.jpg。然后有分隔符;最后我们将标签0分配给图像。将标签视为该图像所属的主题（该人物），所以相同的主题（人物）应该具有相同的标签。
+
+从AT＆T Facedatabase下载AT＆T Facedatabase，并从at.txt下载相应的CSV文件，该文件看起来像这样：
+
+\begin{tabular}{|l|}
+	\hline 
+	./at/s1/1.pgm; \; 0 \\
+	./at/s1/2.pgm; \; 0 \\
+	$\cdots$ \\
+	./at/s2/1.pgm; \; 1 \\
+	./at/s2/2.pgm; \; 1 \\
+	$\cdots$ \\
+	./at/s40/1.pgm; \; 39 \\
+	./at/s40/2.pgm; \; 39 \\
+	\hline
+\end{tabular}
+
+想象一下，我将文件解压缩到D:/data/at，并将CSV文件下载到D:/data/at.txt。那么你只需要用D:/data/来搜索和替换./。您可以在选择的编辑器中执行此操作，每个足够高级的编辑器都可以执行此操作。一旦拥有有效的文件名和标签的CSV文件，您可以通过将路径传递到CSV文件作为参数来运行任何演示实例：
+
+\begin{tabular}{|l|}
+	\hline
+	facerec\_demo.exe \; D:/data/at.txt \\
+	\hline
+\end{tabular}
+
+有关创建CSV文件的详细信息，请参阅创建CSV文件。
+
+\section{Eigenfaces}
+我们给出的图像表示的问题是它的高维度。 二维$p \times q$灰度图像跨越m = pq维向量空间，因此具有100×100像素的图像已经存在于10,000维图像空间中。 问题是：所有维度对我们来说同样有用吗？ 我们只能利用数据的差异性来做出决定，因此我们正在寻找的是能表示大部分信息的成分。 主成分分析（PCA）由Karl Pearson（1901）和Harold Hotelling（1933）独立提出，将一组可能相关的变量转化为较小的一组不相关变量。 这个想法是，高维数据集通常由相关变量描述，因此只有少数有意义的维度占据了大部分信息。 PCA方法在数据中找到方差最大的方向，称为主成分。
+
+\subsection{特征脸方法的算法描述}
+令 $X=\{x_1,x_2,\cdots,x_n\}$ be a random vector with observations $x_i \in R^d$.
+\begin{enumerate}
+    	\item 计算均值$\mu$
+   		 $$ \mu = \frac{1}{n}\sum_{i = 1}^{n}x_i$$ 
+   	 \item 计算协方差矩阵S
+   		$$ S = \frac{1}{n}\sum_{i=1}^n (x_i−\mu)(x_i−\mu)^T $$ 
+    	\item 计算协方差矩阵S的特征值$\lambda_i$和特征矢量$v_i$
+		$$ Sv_i=\lambda_iv_i, \; \; i=1,2,\cdots,n $$ 
+    	\item 将特征向量按其特征值进行递减排序。 k个主成分是与k个最大特征值对应的特征向量。观测矢量x的k个主成分由下式给出：
+		$$ y = W^T(x−\mu)$$
+	其中， $W=(v_1,v_2,\cdots,v_k)$。
+\end{enumerate}
+
+Eigenfaces方法然后通过以下方式进行人脸识别：
+\begin{itemize}
+    	\item 将所有训练样本投影到PCA子空间。
+    	\item 将查询图像投影到PCA子空间中。
+    	\item 找到投影的训练图像和投影的查询图像之间的最近邻居。
+\end{itemize}
+
+还有一个问题需要解决。想象一下，我们给了400张100×100像素的图像。主成分分析求解协方差矩阵$S = XX^T$，其中size（X）= 10000×400。你会得到一个10000×10000的矩阵，大概是0.8GB。解决这个问题是不可行的，所以我们需要应用一个技巧。从您的线性代数课程可知，M> N的M×N矩阵只能具有N-1个非零特征值。因此，可以取而代之计算大小为N×N的矩阵$S' = X^TX$的特征值分解：
+$$X^TXv_i = \lambda_iv_i$$
+
+并用数据矩阵的左乘法得到原始协方差矩阵$S = XX^T$的特征向量：
+$$XX^T（Xv_i) = \lambda_i(Xv_i)$$
+
+得到的特征向量是正交的，得到正交特征向量，它们需要被归一化为单位长度。我不想把它变成一个出版物，所以请研究\cite{Duda2000}推导和证明方程式。
+
+\subsection{Eigenfaces in OpenCV}
+完整的程序参见当前文件夹下的：{\color{blue}{facerec\_eigenfaces.cpp}}
+
+我使用了jet colormap，所以你可以看到灰度值在特定的特征脸内是如何分布的。 您可以看到，特征脸不仅可以对面部特征进行编码，还可以对图像中的照明进行编码（参见特征面4中的左侧光线，特征曲线＃5中的右侧光）：
+\begin{figure}[htbp]
+	\centerline{\includegraphics[width=10cm]{./figures/eigenfaces_opencv.png}}
+	\caption{eigenfaces}
+\end{figure}
+
+我们已经看到，我们可以从其低维近似重建一个面部图像。 所以让我们来看一下好的重建需要多少个特征脸。下图中的子图分别是用10,30，..., 310个特征脸重建的效果：
+\begin{lstlisting}
+	// Display or save the image reconstruction at some predefined steps:
+	for(int num_components = 10; num_components < 300; num_components+=15) {
+    		// slice the eigenvectors from the model
+    		Mat evs = Mat(W, Range::all(), Range(0, num_components));
+    		Mat projection = LDA::subspaceProject(evs, mean, images[0].reshape(1,1));
+   		Mat reconstruction = LDA::subspaceReconstruct(evs, mean, projection);
+   		 // Normalize the result:
+    		reconstruction = norm_0_255(reconstruction.reshape(1, images[0].rows));
+   		 // Display or save:
+    		if(argc == 2) {
+        			imshow(format("eigenface_reconstruction_%d", num_components), reconstruction);
+    		} else {
+        			imwrite(format("%s/eigenface_reconstruction_%d.png", output_folder.c_str(), num_components), reconstruction);
+    		}
+	}
+\end{lstlisting}
+
+10个特征向量显然不足以进行良好的图像重建，50个特征向量可能已经足以编码重要的面部特征。 您将获得AT＆T Facedatabase的大约300个特征向量的良好重建。 有一个经验法则，你应该选择多少特征面才能成功的面部识别，但它在很大程度上取决于输入数据。 \cite{Zhao2003}是开始研究的完美点：
+\begin{figure}[htbp]
+	\centerline{\includegraphics[width=10cm]{./figures/eigenface_reconstruction_opencv.png}}
+	\caption{eigenfaces\_reconstruction}
+\end{figure}
+
+\section{Fisherfaces}
+主成分分析（PCA）是Eigenfaces方法的核心，它找到最大化数据总方差的特征的线性组合。虽然这显然是一种表达数据的强大方法，但它并不考虑任何类，所以当抛出成分时，很多判别信息可能会丢失。想象一下，您的数据的变化是由外部来源产生的，让它成为光。由PCA识别的成分根本不一定包含任何判别信息，因此投影后的样本被涂抹在一起，并且不可能进行分类（参见http://www.bytefish.de/wiki/pca\_lda\_with\_gnu\_octave为例）。
+
+线性判别分析执行类别特定的维数降低，并由伟大的统计学家R. A. Fisher爵士发明。他在1936年的论文中成功地将其用于分类花。在分类问题中使用多重测量\cite{Fisher1936}。为了找到在类之间最好分离的特征的组合，线性判别分析最大化了类之间的类之间的散射，而不是最大化整体散射。这个想法很简单：相同的类应该集中在一起，而不同的类在低维表示中尽可能远离彼此。这也被Belhumeur，Hespanha和Kriegman认可，所以他们在\cite{Belhumeur1997}中应用了判别分析来进行人脸识别。
+
+\subsection{Fisherfaces 方法的算法描述}
+令X是一个随机向量，其中样本来自C个类：
+$$X = \{X_1, X_2, \cdots, X_c \}$$
+$$X_i = \{x_1, x_2, \cdots, x_n \}$$
+
+类间（between-class）分散矩阵和类内（within-class）分散矩阵计算如下：
+\begin{align}
+	S_B &= \sum_{i = 1}^c N_i (\mu_i - \mu) (\mu_i - \mu) ^T 	\\
+	S_W &= \sum_{i = 1}^c \sum_{x_j \in X_i} (x_j - \mu_i)(x_j - \mu_i)^T
+\end{align}
+其中，$\mu$是所有样本的均值：
+$$\mu = \frac{1}{N}\sum_{i = 1}^N x_i$$
+$\mu_i$是类$i \in \{1, 2, \cdots, c \}$的均值：
+$$\mu_i = \frac{1}{|X_i|}\sum_{x_j \in X_i} x_j$$
+
+Fisher的经典算法现在寻找一个投影W，最大化了分类可分性标准：
+\begin{equation}
+	W_{opt} = \arg \max_W \frac{\vert W^T S_B W \vert}{\vert W^T S_W W \vert}
+\end{equation}
+
+根据文献\cite{Belhumeur1997}，通过求解一般特征值问题给出了该优化问题的解决方案：
+\begin{align}
+	S_B v_i &= \lambda_i S_W v_i \\
+	S_W^{-1} S_B v_i &= \lambda_i v_i
+\end{align}
+
+有一个问题需要解决：$S_W$的秩最多$(N - c)$，其中N个样本和c个类。 在模式识别问题中，样本数N几乎总是比输入数据的维数（像素数）小，所以散射矩阵SW变得奇异（参见\cite{Raudys1991}）。 在\cite{Belhumeur1997}中，这通过对数据执行主成分分析并将样本投影到$(N-c)$维空间来解决。 然后对减少的数据进行线性判别分析，因为此时$S_W$不再是奇异。
+
+优化问题可以重写为：
+\begin{align}
+	W_{pca} &= \arg \max_W |W^T S_T W|		\\
+	W_{fld} &= \arg \max_W \frac{|W^T W_{pca}^T S_B W_{pca} W|}{|W^T W_{pca}^T S_W W_{pca} W|}
+\end{align}
+
+然后，将样本投影到（c-1）维空间中的变换矩阵W由下式给出：
+\begin{equation}
+		W = W_{fld}^T W_{pca}^T
+\end{equation}
+
+\subsection{Fisherfaces in OpenCV}
+完整的程序参阅当前目录下的{\color{blue}{facerec\_fisherfaces.cpp}}。
+
+For this example I am going to use the Yale Facedatabase A, just because the plots are nicer. Each Fisherface has the same length as an original image, thus it can be displayed as an image. The demo shows (or saves) the first, at most 16 Fisherfaces:
+\begin{figure}[htbp]
+	\centerline{\includegraphics[width=10cm]{./figures/fisherfaces_opencv.png}}
+	\caption{fisherfaces}
+\end{figure}
+
+Fisherfaces方法学习一个特定于类的转换矩阵，使得它们不像Eigenfaces方法那样明显地捕捉照明。判别分析反而发现面部特征来区分人。值得一提的是，Fisherfaces的表现也很大程度上取决于输入数据。实际上说：如果你只学习光照良好图片的Fisherfaces，并尝试识别不良照明场景中的脸部，那么方法很可能会发现错误的成分（只是因为这些特征可能不会在不良照明图像上占优势）。这是有点合理的，因为该方法没有机会学习照明。
+
+Fisherfaces可以像Eigenfaces一样重建投影图像。但是，由于我们只确定了区分不同类的特征，所以您不能期望原始图像的良好重建。对于Fisherfaces方法，我们将将样本图像投影到每个Fisherfaces上。所以你会有一个很好的可视化，每个Fisherfaces描述的特征。
+
+差异对于人眼可能是微不足道的，但您应该能够看到一些差异：
+\begin{figure}[htbp]
+	\centerline{\includegraphics[width=10cm]{./figures/fisherface_reconstruction_opencv.png}}
+	\caption{fisherface\_reconstruction\_opencv}
+\end{figure}
+
+\section{局部二进制模式直方图：Local Binary Patterns Histograms}
+特征脸和Fisherfaces采取了一种整体的方法来进行人脸识别。您将数据视为高维图像空间中的某个矢量。我们都知道高维度是坏的，所以确定了一个较低维的子空间，其中（可能）有用的信息被保留。特征脸方法最大化总方差，如果方差是由外部源产生的，则可能导致问题，因为所有类别上具有最大方差的分量不一定对分类有用（参见http://www.bytefish.de /维基/ pca\_lda\_with\_gnu\_octave）。因此，为了保留一些判别信息，我们应用了线性判别分析，并按照Fisherfaces方法的描述进行了优化。 Fisherfaces方法运行良好，至少对于我们在模型中假设的约束场景。
+
+现在现实生活并不完美。您根本不能保证您的图像中完美的光线设置或则每个人都有10种不同的图像。那么如果每个人只有一个图像呢？我们对子空间的协方差估计可能是非常错误的，所以识别也是如此。记住，Eigenfaces方法在AT＆T Facedatabase上有96％的识别率？我们实际需要多少幅图像来获得有用的估计值？以下是AT＆T Facedatabase的特征脸和Fisherfaces方法的等级1识别率，这是一个相当容易的图像数据库：
+\begin{figure}[htbp]
+	\centerline{\includegraphics[width=10cm]{./figures/at_database_small_sample_size.png}}
+	\caption{at\_database\_small\_sample\_size}
+\end{figure}
+
+所以为了获得良好的识别率，您将需要每个人至少8（+ - 1）个图像，而Fisherfaces方法在这里并不真正有帮助。上述实验是使用facerec框架执行的十倍交叉验证结果：({\color{blue}{https：//github.com/bytefish/facerec}})。这不是出版物，所以我不会用深入的数学分析来回答这些数字。
+
+所以一些研究集中在从图像中提取局部特征。这个想法不是把整个图像看成一个高维向量，而只是描述一个对象的局部特征。您以这种方式提取的特征将隐含地具有低维度。一个好主意！但是，您将很快观察到我们给出的图像表示，不仅会受到照明变化的影响。想像像图像中的缩放，平移或旋转这样的东西 - 你的局部描述必须至少对这些东西有一些鲁棒性。就像SIFT一样，“局部二进制模式”方法的根源在于2D纹理分析。局部二进制模式的基本思想是通过将每个像素与其邻域进行比较来总结图像中的局部结构。以像素为中心，并对其邻居进行阈值。如果中心像素的强度大于等于其邻居，则表示为1，如果不是则为0。你会得到每个像素的二进制数，就像：
+\begin{enumerate}
+	\item 所以如果有8个周围像素，你会得到$2^8$可能的组合，称为局部二进制模式，有时也称为LBP编码。 文献中描述的第一个LBP算子实际上使用了一个固定的3 x 3邻域，就像这样：
+\begin{figure}[htbp]
+	\centerline{\includegraphics[width=10cm]{./figures/lbp.png}}
+	\caption{LBP}
+\end{figure}
+\end{enumerate}
+
+\subsection{LBPH方法的算法描述}
+对LBP算子的更正式地描述如下
+\begin{equation}
+	LBP(x_c, y_c) = \sum_{p = 0}^{P-1} 2^p s(i_p - i_c)
+\end{equation}
+其中，$i_c$是中心像素$(x_c, y_c)$的强度，$i_p$是相邻像素的强度。$s$是如下定义的符号函数：
+\begin{equation}
+	s(x) = \begin{cases}
+		1, & \text{if} \; x \ge 0 \\
+		0, & \text{else}
+	\end{cases}
+\end{equation}
+
+此描述使您能够捕获图像中非常细粒度的细节。 事实上，作者能够与纹理分类的最新技术结果进行竞争。 算法发布后不久，有人指出，一个固定的邻域（neighborhood）不能对不同尺度的细节进行编码。 所以算子被扩展到在[3]中使用一个可变邻域。 这个想法是将圆周上的邻居数量与可变半径对齐，这样可以捕获以下邻域：
+\begin{figure}[htbp]
+	\centerline{\includegraphics[width=10cm]{./figures/patterns.png}}
+	\caption{patterns}
+\end{figure}
+
+ For a given Point $(x_c, y_c)$, the position of the neighbor $(x_p, y_p)$, $p \in P$ can be calculated by:
+\begin{align}
+	x_p &= x_c + R \cos(\frac{2\pi p}{P})		\\
+	y_p &= y_c - R \sin(\frac{2\pi p}{P})
+\end{align}
+Where $R$ is the radius of the circle and $P$ is the number of sample points.
+
+该算子是原始LBP代码的扩展，因此有时称为扩展LBP（也称为圆形LBP）。 如果圆上的点坐标与图像坐标不对应，则内插点。 计算机科学有一堆聪明的插值方案，OpenCV实现一个双线性插值：
+\begin{equation}
+	f(x, y) \approx \begin{bmatrix} 1 - x & x \end{bmatrix} \begin{bmatrix} f(0, 0) & f(0, 1) \\ f(1, 0) & f(1, 1) \end{bmatrix} \begin{bmatrix} 1-y \\ y \end{bmatrix}
+\end{equation}
+
+根据定义，LBP算子对单调灰度变换是鲁棒的。 我们可以通过查看人工修改的图像的LBP图像来轻松地验证这一点（所以你看到一个LBP图像是什么样的！）：
+\begin{figure}[htbp]
+	\centerline{\includegraphics[width=10cm]{./figures/lbp_yale.jpg}}
+	\caption{LBP\_yale}
+\end{figure}
+
+那么剩下的就是如何将空间信息整合到人脸识别模型中。 Ahonen等人提出的表述\cite{Ahonen2004}是将LBP图像划分为m个局部区域，并从每个区域提取直方图。 然后通过连接局部直方图（不合并它们）获得空间增强的特征向量。 这些直方图称为局部二进制模式直方图。
+
+\subsection{Local Binary Patterns Histograms in OpenCV}
+完整程序参阅当前文件夹下的\;{\color{blue}{src/facerec\_lbph.cpp}}
+
+\section{结论}
+您已经学会了如何在实际应用中使用新的FaceRecognizer。 阅读文档后，您也知道算法如何工作，所以现在是时候尝试可用的算法了。 使用它们，改进它们，让OpenCV社区参与！
+
+\section{Credits}
+如果没有使用AT＆T人脸数据库和耶鲁Facedatabase A / B的脸部图像的类型许可，本文档将无法实现。
+
+\subsection{AT\&T 人脸数据库}
+重要提示：使用这些图像时，请注明“剑桥AT\&T实验室”。
+
+人脸数据库，之前是ORL人脸数据库，面包含一组1992年4月至1994年4月期间拍摄的面部图像。该数据库用于剑桥大学工程系进行的与语音，视觉和机器人组合作进行的人脸识别项目。
+
+该数据库包含40个不同的人脸，每个人脸有十张不同的图像。对于某些人脸，图像在不同时间拍摄，改变照明，面部表情（开放/闭合的眼睛，微笑/不微笑）和面部细节（眼镜/无眼镜）。所有的图像都是针对黑暗均匀的背景拍摄，受试者处于直立的正面位置（对于某些侧面运动具有容忍性）。
+
+这些文件采用PGM格式。每个图像的大小为92x112像素，每像素256个灰度级。图像组织在40个目录（每个主题一个），其名称为$s_X$，其中X表示主题编号（介于1和40之间）。在这些目录的每个目录中，该目标人脸有十个不同的图像，它们具有Y.pgm格式的名称，其中Y是该主题的图像编号（1到10之间）。
+
+数据库的副本可以从以下网址获取：{\color{blue}{http://www.cl.cam.ac.uk/research/dtg/attarchive/pub/data/att\_faces.zip}}。
+
+\subsection{耶鲁大学 Facedatabase A}
+耶鲁脸数据库A（尺寸6.4MB）包含15个人的GIF格式的165灰度图像。每个科目有11张图像，每个不同的面部表情或配置，每个不同的面部表情或配置：中心灯，眼镜，快乐，左光，无眼镜，正常，右光，悲伤，困倦，惊讶和眨眼。 （来源：{\color{blue}{http://cvc.yale.edu/projects/yalefaces/yalefaces.html}}）
+
+\subsection{耶鲁 Facedatabase B}
+扩展的耶鲁脸数据库B包含28个人类受试者在9个姿势和64个照明条件下的16128张图像。该数据库的数据格式与耶鲁脸数据库B相同。有关数据格式的更多详细信息，请参考耶鲁脸数据库B的主页（或本页的一个副本）。
+
+您可以自由使用扩展的耶鲁脸数据库B进行研究。使用这个数据库的所有出版物应该承认使用“the Exteded Yale Face Database B”，并且引用Athinodoros Georghiades，Peter Belhumeur和David Kriegman的文章\cite{Georghiades2001}。
+
+扩展的耶鲁脸数据库B使用的所有测试图像数据手动对齐，裁剪，然后重新调整为168x192张图像。如果您使用裁剪的图像发布实验结果，请参考PAMI2005文章。 （资料来源：{\color{blue}{http://vision.ucsd.edu/~leekc/ExtYaleDatabase/ExtYaleB.html}}）
+
+\section{附录}
+\subsection{Creating the CSV File}
+您肯定不想手动创建CSV文件。 我已经准备好一些Python脚本 {\color{blue}{src/create\_csv.py}}，会自动创建一个CSV文件。 
+
+\subsection{Aligning Face Images}
+您的图像数据的准确对齐在像情绪检测这样的任务中尤为重要。 相信我，你肯定不想手工做。 所以我为你准备了一个很小的Python脚本。 该代码真的很容易使用。 要缩放，旋转和裁剪脸部图片，您只需要调用CropFace（image，eye\_left，eye\_right，offset\_pct，dest\_sz）的，其中：
+\begin{itemize}
+    	\item  eye\_left是左眼的位置
+   	\item  eye\_right是右眼的位置
+     	\item  offset\_pct是要保持在眼睛旁边的图像的百分比（水平，垂直方向）
+    	\item  dest\_sz是输出图像的大小
+\end{itemize}
+如果您的图像使用相同的offset\_pct和dest\_sz，则它们都在眼睛对齐。
+
+想象一下，我们得到了阿诺德·施瓦辛格（Arnold Schwarzenegger）的这张照片。 眼睛的（x，y）位置对于左眼约为（252,364），右眼为（420,366）。 现在，您只需要定义水平偏移，垂直偏移，以及缩放，旋转和裁剪之后面部图像应具有的尺寸。
+
+这里有些例子：
+\begin{figure}[!h]
+	\centering
+	\begin{minipage}[t]{0.25\textwidth}
+		\centering
+		\includegraphics[width=3cm]{./figures/arnie_10_10_200_200.jpg}
+		\caption{0.1, 0.1, (200, 200)}
+	\end{minipage}
+	\qquad	\qquad 
+	\begin{minipage}[t]{0.25\textwidth}
+		\centering
+		\includegraphics[width=3cm]{./figures/arnie_20_20_200_200.jpg}
+		\caption{0.2, 0.2, (200, 200)}
+	\end{minipage}
+\\
+	\begin{minipage}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[width=3cm]{./figures/arnie_30_30_200_200.jpg}
+		\caption{0.3, 0.3, (200, 200)}
+	\end{minipage}
+	\begin{minipage}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[width=2cm]{./figures/arnie_20_20_70_70.jpg}
+		\caption{0.2, 0.2, (70, 70)}
+	\end{minipage}
+\end{figure}
+
+
+
+
+
+
+
+
+
+\newpage
+\bibliographystyle{unsrt}
+\bibliography{articles}
+\end{document}

@@ -1,0 +1,15 @@
+\begin{thebibliography}{1}
+
+\bibitem{Sirovich1987}
+L.~Sirovich and M.~Kirby.
+\newblock Low-dimensional procedure for the characterization of human faces.
+\newblock {\em J. Opt. Soc. Am. A}, 4(3):519--524, Mar 1987.
+
+\bibitem{Turk1991}
+M.~A. Turk and A.~P. Pentland.
+\newblock {Face recognition using eigenfaces}.
+\newblock In {\em Computer Vision and Pattern Recognition, 1991. Proceedings
+  CVPR \&\#039;91., IEEE Computer Society Conference on}, pages 586--591. IEEE,
+  June 1991.
+
+\end{thebibliography}

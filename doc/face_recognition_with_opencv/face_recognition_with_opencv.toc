@@ -1,0 +1,21 @@
+\contentsline {section}{\numberline {1}Introduction}{3}
+\contentsline {section}{\numberline {2}人脸识别}{3}
+\contentsline {section}{\numberline {3}人脸图像数据集}{4}
+\contentsline {subsection}{\numberline {3.1}准备数据}{4}
+\contentsline {section}{\numberline {4}Eigenfaces}{5}
+\contentsline {subsection}{\numberline {4.1}特征脸方法的算法描述}{5}
+\contentsline {subsection}{\numberline {4.2}Eigenfaces in OpenCV}{6}
+\contentsline {section}{\numberline {5}Fisherfaces}{7}
+\contentsline {subsection}{\numberline {5.1}Fisherfaces 方法的算法描述}{8}
+\contentsline {subsection}{\numberline {5.2}Fisherfaces in OpenCV}{9}
+\contentsline {section}{\numberline {6}局部二进制模式直方图：Local Binary Patterns Histograms}{10}
+\contentsline {subsection}{\numberline {6.1}LBPH方法的算法描述}{11}
+\contentsline {subsection}{\numberline {6.2}Local Binary Patterns Histograms in OpenCV}{12}
+\contentsline {section}{\numberline {7}结论}{13}
+\contentsline {section}{\numberline {8}Credits}{13}
+\contentsline {subsection}{\numberline {8.1}AT\&T 人脸数据库}{13}
+\contentsline {subsection}{\numberline {8.2}耶鲁大学 Facedatabase A}{13}
+\contentsline {subsection}{\numberline {8.3}耶鲁 Facedatabase B}{13}
+\contentsline {section}{\numberline {9}附录}{14}
+\contentsline {subsection}{\numberline {9.1}Creating the CSV File}{14}
+\contentsline {subsection}{\numberline {9.2}Aligning Face Images}{14}

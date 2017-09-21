@@ -1,0 +1,397 @@
+\documentclass[UTF8]{ctexart}
+\CTEXsetup[format={\LARGE\bf}]{part} %设置标题左对齐
+\CTEXsetup[format={\Large\bf}]{section} %设置标题左对齐
+\CTEXsetup[format={\large\bf\raggedright}]{subsection} %设置二级标题左对齐
+\CTEXsetup[format={\normalsize\bf\raggedright}]{subsubsection} %设置三级标题左对齐
+
+\setlength\parskip{4pt} %设置段与段之间的垂直距离
+
+\usepackage{amsmath} % 美国数学会（American Mathematical Society）开发的数学公式宏包
+\usepackage{amsfonts} % 数学字母
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{geometry}
+\usepackage{color}
+\usepackage{latexsym}
+\usepackage{longtable}
+\usepackage{amssymb}
+\usepackage{verbatim}  %多行注释宏包， 然后在待注释的部分上加入 \begin{comment} ... \end{comment}
+\usepackage{cite}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    language=C,
+    numbers=left, 
+    numberstyle=\tiny,
+    basicstyle=\small,
+    keywordstyle= \color{ blue!100},
+    commentstyle= \color{red!100}, 
+    frame=shadowbox, % 阴影效果
+    rulesepcolor= \color{ red!20!green!20!blue!20} ,
+    escapeinside=``, % 英文分号中可写入中文
+    xleftmargin=2em,xrightmargin=2em, aboveskip=1em,
+    framexleftmargin=2em
+} 
+
+\geometry{left = 2 cm, right = 2 cm, top = 2 cm, bottom = 2 cm} %页边距设置
+
+\title{特征脸：Eigenface}
+
+\author{周强}
+\date{\today}
+
+%----------------------------------------**常用功能模板**--------------------------------------------------------------%
+\begin{comment}
+
+%------------------------------------------文本排列----------------------------------------------------------%
+{itemize}命令对文本进行简单的排列，不是采用序号，而是实心圆点符号。
+这个命令需要和\item配合使用。作为演示，输入如下代码：
+\begin{itemize}
+	\item The direction $\angle {\bf g}$ of the gradient vector ${\bf g}$ is the direction in the N-D space along which the function $f({\bf x})$ increases  most rapidly.
+	\item The magnitude $|{\bf g}|$ of the gradient ${\bf g}$ is the rate of the  increment. 
+\end{itemize}
+%--------------------------------------------------------------------------------------------------------------%
+
+%------------------------------------------文本和公式添加颜色----------------------------------------------------------%
+导言区添加 \usepackage{color}
+1） 对文本添加颜色：
+	{ \color{red}{I love you} }
+2) 对公式添加颜色：
+	{ \color{red}{$a = b + c$} }
+%---------------------------------------------------------------------------------------------------------------------------------%
+
+%------------------------------------------引用文献----------------------------------------------------------%
+% 使用jabref管理文献
+打开方式： $ java -jar JabRef-3.8.2.jar
+
+% 第一步： 新建一个空白文档，比如 articles.bib ,该文档与当前.tex文件放在同一个目录下。 在文档里添加引用的文章的条目，比如
+@ARTICLE{Bouguet00pyramidalimplementation,
+    author = {Jean-yves Bouguet},
+    title = {Pyramidal implementation of the Lucas Kanade feature tracker},
+    journal = {Intel Corporation, Microprocessor Research Labs},
+    year = {2000}
+}
+% 第二步：在文档最后，\end{document}之前，添加如下
+	% bibliographystyle {plain}
+	% bibliography {articles}
+
+% 第三步： 文献中引用，如
+	% \cite{Bouguet00pyramidalimplementation}
+
+% 第四部： 按如下顺序编译四次： XeLaTex,  BibTex,  XeLaTex, XeLaTex 
+%-----------------------------------------------------------------------------------------------------------------%
+
+%---------------------------------------------------- 插入矩阵-------------------------------------------------------%
+\begin{matrix}	%不带括号
+	a_1	&	a_2	\\
+	a_3	&	a_4
+\end{matrix}
+
+\begin{bmatrix}	%带中括号
+	a_1	&	a_2	\\
+	a_3	&	a_4
+\end{bmatrix}
+
+\begin{vmatrix}	%两边竖线
+	a_1	&	a_2	\\
+	a_3	&	a_4
+\end{vmatrix}
+
+\begin{Vmatrix}	%两边双竖线
+	a_1	&	a_2	\\
+	a_3	&	a_4
+\end{Vmatrix}
+
+\begin{pmatrix}	%带圆括号
+	a_1	&	a_2	\\
+	a_3	&	a_4
+\end{pmatrix}
+
+\begin{Bmatrix}	%带大括号
+	a_1	&	a_2	\\
+	a_3	&	a_4
+\end{Bmatrix}
+%--------------------------------------------------------------------------------------------------------------------------%
+
+%------------------ 插入公式：带自动编号和引用标签-------------------------------------------------------%
+\begin{equation}
+	y_1^T E y_2 = 0	\label{eq:essential}
+\end{equation}
+%--------------------------------------------------------------------------------------------------------------------------%
+
+%------------------------------------------- 插入多行公式: 单个标号-------------------------------------------------------------------------------%
+%split环境用在equation数学环境里面，可以把一个数学公式拆分成多行，并且支持对齐
+\begin{equation}
+	\begin{split}
+		t_1^{\land} &= U \; R_Z(\frac{\pi}{2}) \; \sum \; U^T, \quad R_1 = U \; R_Z^T(\frac{\pi}{2}) \;  V^T \\
+		t_2^{\land} &= U \; R_Z(-\frac{\pi}{2}) \; \sum \; U^T, \quad R_2 = U \; R_Z^T(-\frac{\pi}{2}) \;  V^T
+	\end{split}
+\end{equation}
+%------------------------------------------------------------------------------------------------------------------------------------------------------------%
+
+%------------------------------------------- 插入多行公式: 多个标号-------------------------------------------------------------------------------%
+\begin{align} \\默认左右对齐等
+	R_{pos} &= R R_{pos}	\\
+	t_{pos} &= t_{pos} + t R_{pos}
+\end{align}
+
+\begin{gather} \\默认居中对齐
+	R_{pos} &= R R_{pos}	\\
+	t_{pos} &= t_{pos} + t R_{pos}
+\end{gather}
+%------------------------------------------------------------------------------------------------------------------------------------------------------------%
+
+%------------------ 插入图片模板----------------------------------------------------------------------------------%
+\begin{figure}[!h]
+	\centerline{\includegraphics[width=8cm]{loca_control_plan.png}}
+	\caption{攀爬机器人工作大纲（初拟）}
+	\label{fig:loca_ctrl_plan}
+\end{figure}
+
+图的引用： \ref{fig:loca_ctrl_plan} 
+%--------------------------------------------------------------------------------------------------------------------------%
+
+
+%--------------------------- 插入并排图片模板----------------------------------------------------------------------------------%
+并排摆放，共享标题
+当我们需要两幅图片并排摆放，并共享标题时，可以在 figure 环境中
+使用两个 \includegraphics 命令。
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics{left}
+	\includegraphics{right}
+	\caption{反清复明}
+\end{figure}
+%--------------------------------------------------------------------------------------------------------------------------%
+
+%------------------------------------------插入并排图片模板：各含标题---------------------------------------------------------%
+\begin{figure}[!h]
+	\centering
+	\begin{minipage}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[width=6cm]{./figures/edge_Sobel.png}
+		\caption{edge\_Sobel}
+	\end{minipage}
+	\qquad	\qquad 
+	\begin{minipage}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[width=6cm]{./figures/edge_Prewitt.png}
+		\caption{edge\_Prewitt}
+	\end{minipage}
+	% 空格，另起一行
+
+	\begin{minipage}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[width=6cm]{./figures/edge_DoG.png}
+		\caption{edge\_DoG}
+	\end{minipage}
+	\qquad	\qquad 
+	\begin{minipage}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[width=6cm]{./figures/edge_canny.png}
+		\caption{edge\_canny}
+	\end{minipage}
+\end{figure}
+%----------------------------------------------------------------------------------------------------------------------------------%
+
+%---------------------------------------------------插入python 高亮代码：-------------------------------------------------------------------------------%
+首先： https://github.com/olivierverdier/python-latex-highlighting
+	将下载的pythonhighlight.sty放到你的.tex文件所在的目录下
+
+The package is loaded by the following line:
+
+然后： \usepackage{pythonhighlight}
+
+最后，使用方法如下：
+\begin{python}
+def f(x):
+    return x
+\end{python}
+%----------------------------------------------------------------------------------------------------------------------------------%
+
+
+%---------------------------------------------------插入C++ 高亮代码：-------------------------------------------------------------------------------%
+首先在引言区添加：
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    language=C++,
+    numbers=left, 
+    numberstyle=\tiny,
+    basicstyle=\small,
+    keywordstyle= \color{ blue!100},
+    commentstyle= \color{red!100}, 
+    frame=shadowbox, % 阴影效果
+    rulesepcolor= \color{ red!20!green!20!blue!20} ,
+    escapeinside=``, % 英文分号中可写入中文
+    xleftmargin=2em,xrightmargin=2em, aboveskip=1em,
+    framexleftmargin=2em
+} 
+
+然后在正文：
+\begin{lstlisting}
+	代码
+\end{lstlisting}
+%----------------------------------------------------------------------------------------------------------------------------------%
+
+
+%------------------ 插入表格模板----------------------------------------------------------------------------------%
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{l}
+		\hline
+		\textbf{Algorithm CNN} $(img)$\textbf{:}	\\
+		\qquad	\textbf{return} $direction$	\\
+		\\
+		\hline
+		\\
+		\textbf{Algorithm Division\_estimate} $(img)$\textbf{:}	\\
+		\qquad	$U = 180^\circ, L = -180^\circ$		\\
+		\qquad	\textbf{while} $(U - L > 1^\circ)$	\textbf{do}	\\
+		\qquad \qquad	$M = (U + L) / 2$	\\
+		\qquad \qquad	$img\_r = \mathbf{Rotate\_image} (img, 90^\circ - M)$	\\
+		\qquad \qquad	$direction = \mathbf{CNN} (img\_r)$	\\
+		\qquad \qquad	\textbf{if} $(direction == Up)$ 	\\
+		\qquad \qquad \qquad	 $U = M$ 	\\
+		\qquad \qquad	\textbf{else} 	\\
+		\qquad \qquad \qquad $L = M$ 	\\
+		\qquad	\textbf{end while}		\\
+		\qquad \textbf{return} $(U + L) / 2$	\\	
+		\hline
+	\end{tabular}
+	\caption{攀爬机器人方向角测量算法}
+	\label{tbl:algorithm_1}
+\end{table}
+表格的引用： \ref{tbl:algorithm_1} 
+控制表格宽度： \begin{tabular}{|p{1cm}|p{2cm}|p{3cm}|}
+%--------------------------------------------------------------------------------------------------------------------------%
+
+
+%------------------------------------------------  绘制长直线  -------------------------------------------------------------------%
+\rule[水平高度]{长度}{粗细}
+
+例如：
+\rule[0.25\baselineskip]{\textwidth}{1pt}
+\rule[-10pt]{14.3cm}{0.05em}
+
+\baselineskip是单位 距离下面的距离
+%--------------------------------------------------------------------------------------------------------------------------%
+
+
+\end{comment}
+%----------------------------------------**常用功能模板**--------------------------------------------------------------%
+
+\begin{document}
+\maketitle %实际输出论文标题;
+
+{\bf{特征脸(Eigenface)}} 是指用于机器视觉领域中的人脸识别问题的一组{\color{blue}{特征向量}}。使用特征脸进行人脸识别的方法首先由Sirovich and Kirby (1987)\cite{Sirovich1987}提出，并由Matthew Turk和Alex Pentland\cite{Turk1991}用于人脸分类。该方法被认为是第一种有效的人脸识别方法。这些特征向量是从高维矢量空间的人脸图像的协方差矩阵计算而来。 这些特征脸本身形成了用于构造协方差矩阵的所有图像的{\color{blue}{基础集合（basis set）}}。 这样，通过使用较小的一组基础图像or特征脸来表示原始训练图像，从而减小尺寸。 通过比较 faces 如何用基础集合表达，从而实现分类。
+
+\section{历史}
+特征脸方法开始于探索人脸图像的低维表示。 Sirovich和Kirby（1987）表明，{\color{blue}{主成分分析}}可以用于收集人脸图像以形成一组基本特征。这些基本图像（称为Eigenpictures）可以线性组合以重建原始训练集中的图像。如果训练集由M个图像组成，主成分分析可以形成N个图像的基本集合，其中$N<M$。通过增加本征图像(Eigenpictures)的数量可以减少重建误差，然而所需的数量总是选择小于M。例如，如果需要为M个人脸图像的训练集生成N个特征脸（eigenfaces），则可以说每个脸部图像可以由所有这些K个"特征"或"特征脸"的比例组成：$Face \; image_1 = (23\% \; of\;  E_1) + (2\% \; of\;  E_2) + (51\% \; of\;  E_3) + \cdots + (1\% \; of\;  E_n)$。
+
+1991年，M. Turk和A. Pentland扩大了这些结果，并提出了人脸识别的特征脸法[3]。除了设计基于特征脸的自动人脸识别系统之外，他们还显示了一种计算协方差矩阵的特征向量的方式，使得当时的计算机可以在大量人脸图片上执行特征分解。人脸图像通常占据高维空间，传统的主成分分析在这些数据集上是棘手的。 Turk和Pentland的论文展示了基于通过图片数量而不是图片像素数量大小的矩阵来提取特征向量的方法。
+
+一旦建立，特征脸法扩展到包括预处理方法，以提高精度。{\color{blue}{多重流形(multiple manifold)}}方法也用于构建不同对象和不同特征（比如眼睛等）的特征集合[5] [6]。
+
+\section{生成特征脸}
+一组特征脸可以通过在一大组描述不同人脸的图像上进行{\color{blue}{主成分分析（PCA）}}获得。非正式地，特征面可以被认为是一组“标准化的面部成分”，源自许多面部照片的{\color{blue}{统计分析}}。任意一张人脸图像都可以被认为是这些标准脸的组合。例如，一张人脸图像可能{\color{blue}{平均脸（average face）}}加上特征脸1的10\%，加上特征脸2的55\%，再减去特征脸3的3\%。显然，它并没有将许多特征脸组合在一起，以实现公平的近似大多数面孔。另外，由于人脸是通过一系列向量（每个特征脸一个比例值）而不是数字图像进行保存，可以节省很多存储空间。
+
+创建的特征脸将显示为以特定图案排列的亮和暗区域。这种模式是一个面孔的不同特征被单独评估和评分。将有一种模式来评估{\color{blue}{对称性}}，如果有任何风格的面部毛发，发丝是哪里，或评估鼻子或嘴巴的大小。其他特征脸具有不太容易识别的图案，而特征脸的图像可能看起来很像脸。
+
+用于创建特征脸和使用它们进行识别的技术也在人脸识别之外使用。该技术还可用于{\color{blue}{手写分析}}，{\color{blue}{唇读}}，{\color{blue}{语音识别}}，{\color{blue}{手语/手势解释}}和{\color{blue}{医学影像分析}}。因此，有些不使用术语特征脸，但更喜欢使用“特征图像”。
+
+\section{实际实现}
+要创建一组特征脸，必须：
+\begin{enumerate}
+	\item 准备一个训练集的人脸图像。构成训练集的图片需要在相同的照明条件下拍摄的，并将所有图像的眼睛和嘴对齐。他们还必须在预处理阶段就重采样到一个共同的像素分辨率（R×C）。现在，简单地将原始图像的每一行的像素串联在一起，产生一个具有R×C个元素的行向量，每个图像被视为一个向量。现在，假定所有的训练集的图像被存储在一个单一的矩阵T中，矩阵的每一行是一个图像。
+	\item 减去均值向量。均值向量a要首先计算，并且T中的每一个图像都要减掉均值向量。
+	\item 计算协方差矩阵S的特征值和特征向量。每一个特征向量的维数与原始图像的一致，因此可以被看作是一个图像。因此这些向量被称作特征脸。他们代表了图像与{\color{blue}{均值图像（mean image）}}差别的不同方向。通常来说，这个过程的计算代价很高（如果可以计算的话）。但是特征脸的实际适用性源于有效地计算S的特征向量的可能性，而无需明确计算S，如下所述。
+	\item 选择主成份。一个D x D的协方差矩阵会产生D个特征向量，每一个对应R × C图像空间中的一个方向。实际上，特征值对应着特征向量表示的方向上的方差。具有较大特征值的特征向量会被保留下来，一般选择最大的N个，或者按照特征值的比例进行保存，如保留前95\%。
+	\item k是满足$\frac{n(\lambda_1 + \lambda_2 + \cdots + \lambda_k)}{n(\lambda_1 + \lambda_2 + \cdots + \lambda_n)}>\epsilon$的最小整数，其中k是选择的主成分数目，n是图片数目，$\epsilon$是设置在总方差上的阈值。
+\end{enumerate}
+
+这些特征脸现在可以用于标识已有的和新的人脸：我们可以将一个新的人脸图像（先要减去均值图像）投影到特征脸上，以此来记录这个图像与平均图像的偏差。每一个特征向量的特征值代表了训练集合的图像与均值图像在该方向上的偏差有多大。将图像投影到特征向量的子集上可能丢失信息，但是通过保留那些具有较大特征值的特征向量的方法可以减少这个损失。例如，如果当前处理一个100 x 100的图像，就会得到10000个特征向量。在实际使用中，大多数的图像可以投影到100到150个特征向量上进行识别，因此，10000个特征向量的绝大多数可以丢弃。
+
+\section{计算特征向量}
+直接在图像的协方差矩阵上进行PCA计算在计算量上是不可行的。如果图像比较小，如$100 \times 100$的灰度图像，则每个图像是一个10000维空间的一个点，协方差矩阵 S 则具有$10,000 \times 10,000 = 10^8$个元素。然而，协方差矩阵的秩受到训练图像的限制：如果有 N 个训练样本，则最多有 N − 1 个对应非零特征值的特征向量。如果训练样本的数目比图像的维数低，则可以通过如下方法简化主成分的计算。
+
+设 T 是预处理图像的矩阵，每一列对应一个减去均值图像之后的图像。则，协方差矩阵为 $S = TT^T$ ，并且对 S 的特征值分解为
+\begin{equation}
+	Sv_i = TT^Tv_i = \lambda_i v_i
+\end{equation}
+
+然而， $TT^T$ 是一个非常大的矩阵。因此，如果转而使用如下的特征值分解
+\begin{equation}
+	T^TTu_i = \lambda_i u_i
+\end{equation}
+
+此时，我们发现如果在等式两边乘以T，可得到
+\begin{equation}
+	TT^TTu_i = \lambda_i T u_i
+\end{equation}
+
+这就意味着，如果 $u_i$ 是 $T^TT$的一个特征向量，则 $v_i = Tu_i$ 是 S 的一个特征向量。假设我们的训练集有300张100 × 100像素的图像，则 $T^TT$ 是一个300 × 300的矩阵，这就比原先的 10,000 × 10,000 协方差矩阵要容易处理许多。需要注意的是，上面的特征向量 $v_i$ 没有进行归一化，如果需要，应该在后面在进行处理。
+
+\section{Connection with SVD}
+令 X 表示 $d\times n$ 数据矩阵，其中列$x_{i}$表示减去均值后的图像矢量。那么，
+\begin{equation}
+	covariance(X)=\frac {XX^{T}}{n}
+\end{equation}
+
+Let the {\color{blue}{singular value decomposition (SVD)}} of X be:
+\begin{equation}
+	X=U{\Sigma }V^{T}
+\end{equation}
+
+那么$XX^{T}$的特征值分解为：
+\begin{equation}
+	XX^{T}=U{\Sigma }{{\Sigma }^{T}}U^{T}=U{\Lambda }U^{T}
+\end{equation}
+ 其中，$\Lambda$ = diag (eigenvalues of  $XX^{T}$)
+ 
+因此，我们可以看到：
+\begin{itemize}
+	\item The eigenfaces = U (the left singular vectors of X)；
+	\item The ith eigenvalue of  $XX^{T} = \frac {1}{n} ( \text{ith singular value of} X)^{2}$；
+\end{itemize}
+在数据矩阵X上使用SVD，我们不需要计算实际协方差矩阵就可以得到特征脸(eigenfaces)。
+
+\section{在人脸识别中的应用}
+特征脸的最直接的应用就是人脸识别。在这个需求下，特征脸相比其他手段在效率方面比较有优势，因為特征脸的计算速度非常快，短时间就可以处理大量人脸。但是，特征脸在实际使用时有个问题，就是在不同的光照条件和成像角度时，会导致识别率大幅下降。因此，使用特征脸需限制使用者在统一的光照条件下使用正面图像进行识别。
+
+特征脸主要是尺寸减小方法（dimension reduction method），可以使用相对较小的数据集来表示目标。为了识别人脸，脸部图像被保存为描述每个特征脸对该图像的贡献的权重集合。当将新的脸部图像呈现给系统进行分类时，通过将图像投影到特征脸集合来找到自己的权重。这提供了一组描述该脸部图像的权重。然后将这些权重与图库集中的所有权重进行分类，以找到最接近的匹配项。最近邻法是找到两个向量之间的欧几里德距离的简单方法，其中最小值可以被归类为最接近的目标。
+
+{\bf{伪代码}}：
+\begin{itemize}
+	\item Given input image vector $U\in \Re ^{n}$, the mean image vector from the database  M, calculate the weight of the kth eigenface as:
+$$ w_{k}=V_{k}^{T}(U-M)$$
+Then form a weight vector $W=[w_{1},w_{2},...,w_{k},...,w_{n}]$
+	\item Compare W with weight vectors $W_{m}$ of images in the database. Find the Euclidean distance.
+$$d=||W-W_{m}||^{2}$$
+	\item If $d<\epsilon_{1}$, then the mth entry in the database is a candidate of recognition.
+	\item If $\epsilon_{1}<d<\epsilon_{2}$, then U may be an unknown face and can be added to the database.
+	\item If  $d>\epsilon_{2}$,U is not a face image.
+\end{itemize}
+
+\section{回顾}
+Eigenface提供了一种简单而便宜的方式来实现人脸识别：
+\begin{itemize}
+	\item 其训练过程是完全自动的，易于编码。
+	\item 特征脸充分降低面部图像表现的统计学复杂性。
+	\item 一旦计算了训练数据集的特征脸，可以实时地实现人脸识别。
+	\item Eigenface可以处理大型数据集。
+\end{itemize}
+
+然而，特征脸法的缺陷也是显而易见的：
+\begin{itemize}
+	\item 对照明，尺寸和平移非常敏感；需要高度控制的环境。
+	\item 特征脸难以捕获表情变化。
+	\item 最重要的特征主要是关于照明编码，并且不提供关于实际面部的有用信息。
+\end{itemize}
+为了在实践中应对照明干扰，特征脸方法通常丢弃数据集中的前三个特征脸。由于照明通常是面部图像最大变化背后的原因，前三个特征脸将主要捕获三维照明变化的信息，对脸部识别几乎没有贡献。通过舍弃这三个特征面，人脸识别的准确性将会有相当大的提升，但是Fisherface和Linear空间等其他方法仍然比特征脸法更具有优势。
+
+\bibliographystyle{plain}
+\bibliography{articles}
+\end{document}

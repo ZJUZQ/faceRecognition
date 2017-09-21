@@ -1,0 +1,59 @@
+\begin{thebibliography}{10}
+
+\bibitem{Kanade1973}
+Takeo Kanade.
+\newblock Picture processing system by computer complex and recognition of
+  human faces, November 1973.
+
+\bibitem{Turk1991}
+Matthew Turk and Alex Pentland.
+\newblock Eigenfaces for recognition.
+\newblock {\em J. Cognitive Neuroscience}, 3(1):71--86, January 1991.
+
+\bibitem{Belhumeur1997}
+Peter~N. Belhumeur, João~P. Hespanha, and David~J. Kriegman.
+\newblock Eigenfaces vs. fisherfaces: Recognition using class specific linear
+  projection, 1997.
+
+\bibitem{Wiskott1997}
+Laurenz Wiskott, Jean-Marc Fellous, Norbert Kr\"{u}ger, and Christopher von~der
+  Malsburg.
+\newblock Face recognition by elastic bunch graph matching.
+\newblock {\em IEEE Trans. Pattern Anal. Mach. Intell.}, 19(7):775--779, July
+  1997.
+
+\bibitem{Messer2005}
+Kieron Messer, Josef Kittler, James Short, G.~Heusch, Fabien Cardinaux,
+  Sebastien Marcel, Yann Rodriguez, Shiguang Shan, Y.~Su, Wen Gao, and X.~Chen.
+\newblock {\em Performance Characterisation of Face Recognition Algorithms and
+  Their Sensitivity to Severe Illumination Changes}, pages 1--11.
+\newblock Springer Berlin Heidelberg, Berlin, Heidelberg, 2005.
+
+\bibitem{Ahonen2004}
+Timo Ahonen, Abdenour Hadid, and Matti Pietik{\"a}inen.
+\newblock {\em Face Recognition with Local Binary Patterns}, pages 469--481.
+\newblock Springer Berlin Heidelberg, Berlin, Heidelberg, 2004.
+
+\bibitem{Lee2005}
+Kuang-Chih Lee, Jeffrey Ho, and David~J. Kriegman.
+\newblock Acquiring linear subspaces for face recognition under variable
+  lighting.
+\newblock {\em IEEE Trans. Pattern Anal. Mach. Intell.}, 27(5):684--698, May
+  2005.
+
+\bibitem{Duda2000}
+Richard~O. Duda, Peter~E. Hart, and David~G. Stork.
+\newblock {\em Pattern Classification (2Nd Edition)}.
+\newblock Wiley-Interscience, 2000.
+
+\bibitem{Zhao2003}
+W.~Zhao, R.~Chellappa, P.~J. Phillips, and A.~Rosenfeld.
+\newblock Face recognition: A literature survey.
+\newblock {\em ACM Comput. Surv.}, 35(4):399--458, December 2003.
+
+\bibitem{Fisher1936}
+Ronald~A. Fisher.
+\newblock The use of multiple measurements in taxonomic problems.
+\newblock {\em Annals of Eugenics}, 7:179--188, 1936.
+
+\end{thebibliography}

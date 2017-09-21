@@ -1,0 +1,343 @@
+\documentclass[UTF8]{ctexart}
+\CTEXsetup[format={\LARGE\bf}]{part} %设置标题左对齐
+\CTEXsetup[format={\Large\bf}]{section} %设置标题左对齐
+\CTEXsetup[format={\large\bf\raggedright}]{subsection} %设置二级标题左对齐
+\CTEXsetup[format={\normalsize\bf\raggedright}]{subsubsection} %设置三级标题左对齐
+
+\setlength\parskip{4pt} %设置段与段之间的垂直距离
+
+\usepackage{amsmath} % 美国数学会（American Mathematical Society）开发的数学公式宏包
+\usepackage{amsfonts} % 数学字母
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{geometry}
+\usepackage{color}
+\usepackage{latexsym}
+\usepackage{longtable}
+\usepackage{amssymb}
+\usepackage{verbatim}  %多行注释宏包， 然后在待注释的部分上加入 \begin{comment} ... \end{comment}
+\usepackage{cite}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    language=C,
+    numbers=left, 
+    numberstyle=\tiny,
+    basicstyle=\small,
+    keywordstyle= \color{ blue!100},
+    commentstyle= \color{red!100}, 
+    frame=shadowbox, % 阴影效果
+    rulesepcolor= \color{ red!20!green!20!blue!20} ,
+    escapeinside=``, % 英文分号中可写入中文
+    xleftmargin=2em,xrightmargin=2em, aboveskip=1em,
+    framexleftmargin=2em
+} 
+
+\geometry{left = 2 cm, right = 2 cm, top = 2 cm, bottom = 2 cm} %页边距设置
+
+\title{Fisherfaces recognition}
+\author{周强}
+\date{\today}
+
+
+%----------------------------------------**常用功能模板**--------------------------------------------------------------%
+\begin{comment}
+
+%------------------------------------------文本排列----------------------------------------------------------%
+{itemize}命令对文本进行简单的排列，不是采用序号，而是实心圆点符号。
+这个命令需要和\item配合使用。作为演示，输入如下代码：
+\begin{itemize}
+	\item The direction $\angle {\bf g}$ of the gradient vector ${\bf g}$ is the direction in the N-D space along which the function $f({\bf x})$ increases  most rapidly.
+	\item The magnitude $|{\bf g}|$ of the gradient ${\bf g}$ is the rate of the  increment. 
+\end{itemize}
+%--------------------------------------------------------------------------------------------------------------%
+
+%------------------------------------------文本和公式添加颜色----------------------------------------------------------%
+导言区添加 \usepackage{color}
+1） 对文本添加颜色：
+	{ \color{red}{I love you} }
+2) 对公式添加颜色：
+	{ \color{red}{$a = b + c$} }
+%---------------------------------------------------------------------------------------------------------------------------------%
+
+%------------------------------------------引用文献----------------------------------------------------------%
+% 使用jabref管理文献
+打开方式： $ java -jar JabRef-3.8.2.jar
+
+% 第一步： 新建一个空白文档，比如 articles.bib ,该文档与当前.tex文件放在同一个目录下。 在文档里添加引用的文章的条目，比如
+@ARTICLE{Bouguet00pyramidalimplementation,
+    author = {Jean-yves Bouguet},
+    title = {Pyramidal implementation of the Lucas Kanade feature tracker},
+    journal = {Intel Corporation, Microprocessor Research Labs},
+    year = {2000}
+}
+% 第二步：在文档最后，\end{document}之前，添加如下
+	% bibliographystyle {plain}
+	% bibliography {articles}
+
+% 第三步： 文献中引用，如
+	% \cite{Bouguet00pyramidalimplementation}
+
+% 第四部： 按如下顺序编译四次： XeLaTex,  BibTex,  XeLaTex, XeLaTex 
+%-----------------------------------------------------------------------------------------------------------------%
+
+%---------------------------------------------------- 插入矩阵-------------------------------------------------------%
+\begin{matrix}	%不带括号
+	a_1	&	a_2	\\
+	a_3	&	a_4
+\end{matrix}
+
+\begin{bmatrix}	%带中括号
+	a_1	&	a_2	\\
+	a_3	&	a_4
+\end{bmatrix}
+
+\begin{vmatrix}	%两边竖线
+	a_1	&	a_2	\\
+	a_3	&	a_4
+\end{vmatrix}
+
+\begin{Vmatrix}	%两边双竖线
+	a_1	&	a_2	\\
+	a_3	&	a_4
+\end{Vmatrix}
+
+\begin{pmatrix}	%带圆括号
+	a_1	&	a_2	\\
+	a_3	&	a_4
+\end{pmatrix}
+
+\begin{Bmatrix}	%带大括号
+	a_1	&	a_2	\\
+	a_3	&	a_4
+\end{Bmatrix}
+%--------------------------------------------------------------------------------------------------------------------------%
+
+%------------------ 插入公式：带自动编号和引用标签-------------------------------------------------------%
+\begin{equation}
+	y_1^T E y_2 = 0	\label{eq:essential}
+\end{equation}
+%--------------------------------------------------------------------------------------------------------------------------%
+
+%------------------------------------------- 插入多行公式: 单个标号-------------------------------------------------------------------------------%
+%split环境用在equation数学环境里面，可以把一个数学公式拆分成多行，并且支持对齐
+\begin{equation}
+	\begin{split}
+		t_1^{\land} &= U \; R_Z(\frac{\pi}{2}) \; \sum \; U^T, \quad R_1 = U \; R_Z^T(\frac{\pi}{2}) \;  V^T \\
+		t_2^{\land} &= U \; R_Z(-\frac{\pi}{2}) \; \sum \; U^T, \quad R_2 = U \; R_Z^T(-\frac{\pi}{2}) \;  V^T
+	\end{split}
+\end{equation}
+%------------------------------------------------------------------------------------------------------------------------------------------------------------%
+
+%------------------------------------------- 插入多行公式: 多个标号-------------------------------------------------------------------------------%
+\begin{align} \\默认左右对齐等
+	R_{pos} &= R R_{pos}	\\
+	t_{pos} &= t_{pos} + t R_{pos}
+\end{align}
+
+\begin{gather} \\默认居中对齐
+	R_{pos} &= R R_{pos}	\\
+	t_{pos} &= t_{pos} + t R_{pos}
+\end{gather}
+%------------------------------------------------------------------------------------------------------------------------------------------------------------%
+
+%------------------ 插入图片模板----------------------------------------------------------------------------------%
+\begin{figure}[!h]
+	\centerline{\includegraphics[width=8cm]{loca_control_plan.png}}
+	\caption{攀爬机器人工作大纲（初拟）}
+	\label{fig:loca_ctrl_plan}
+\end{figure}
+
+图的引用： \ref{fig:loca_ctrl_plan} 
+%--------------------------------------------------------------------------------------------------------------------------%
+
+
+%--------------------------- 插入并排图片模板----------------------------------------------------------------------------------%
+并排摆放，共享标题
+当我们需要两幅图片并排摆放，并共享标题时，可以在 figure 环境中
+使用两个 \includegraphics 命令。
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics{left}
+	\includegraphics{right}
+	\caption{反清复明}
+\end{figure}
+%--------------------------------------------------------------------------------------------------------------------------%
+
+%------------------------------------------插入并排图片模板：各含标题---------------------------------------------------------%
+\begin{figure}[!h]
+	\centering
+	\begin{minipage}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[width=6cm]{./figures/edge_Sobel.png}
+		\caption{edge\_Sobel}
+	\end{minipage}
+	\qquad	\qquad 
+	\begin{minipage}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[width=6cm]{./figures/edge_Prewitt.png}
+		\caption{edge\_Prewitt}
+	\end{minipage}
+	% 空格，另起一行
+
+	\begin{minipage}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[width=6cm]{./figures/edge_DoG.png}
+		\caption{edge\_DoG}
+	\end{minipage}
+	\qquad	\qquad 
+	\begin{minipage}[t]{0.3\textwidth}
+		\centering
+		\includegraphics[width=6cm]{./figures/edge_canny.png}
+		\caption{edge\_canny}
+	\end{minipage}
+\end{figure}
+%----------------------------------------------------------------------------------------------------------------------------------%
+
+%---------------------------------------------------插入python 高亮代码：-------------------------------------------------------------------------------%
+首先： https://github.com/olivierverdier/python-latex-highlighting
+	将下载的pythonhighlight.sty放到你的.tex文件所在的目录下
+
+The package is loaded by the following line:
+
+然后： \usepackage{pythonhighlight}
+
+最后，使用方法如下：
+\begin{python}
+def f(x):
+    return x
+\end{python}
+%----------------------------------------------------------------------------------------------------------------------------------%
+
+
+%---------------------------------------------------插入C++ 高亮代码：-------------------------------------------------------------------------------%
+首先在引言区添加：
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    language=C++,
+    numbers=left, 
+    numberstyle=\tiny,
+    basicstyle=\small,
+    keywordstyle= \color{ blue!100},
+    commentstyle= \color{red!100}, 
+    frame=shadowbox, % 阴影效果
+    rulesepcolor= \color{ red!20!green!20!blue!20} ,
+    escapeinside=``, % 英文分号中可写入中文
+    xleftmargin=2em,xrightmargin=2em, aboveskip=1em,
+    framexleftmargin=2em
+} 
+
+然后在正文：
+\begin{lstlisting}
+	代码
+\end{lstlisting}
+%----------------------------------------------------------------------------------------------------------------------------------%
+
+
+%------------------ 插入表格模板----------------------------------------------------------------------------------%
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{l}
+		\hline
+		\textbf{Algorithm CNN} $(img)$\textbf{:}	\\
+		\qquad	\textbf{return} $direction$	\\
+		\\
+		\hline
+		\\
+		\textbf{Algorithm Division\_estimate} $(img)$\textbf{:}	\\
+		\qquad	$U = 180^\circ, L = -180^\circ$		\\
+		\qquad	\textbf{while} $(U - L > 1^\circ)$	\textbf{do}	\\
+		\qquad \qquad	$M = (U + L) / 2$	\\
+		\qquad \qquad	$img\_r = \mathbf{Rotate\_image} (img, 90^\circ - M)$	\\
+		\qquad \qquad	$direction = \mathbf{CNN} (img\_r)$	\\
+		\qquad \qquad	\textbf{if} $(direction == Up)$ 	\\
+		\qquad \qquad \qquad	 $U = M$ 	\\
+		\qquad \qquad	\textbf{else} 	\\
+		\qquad \qquad \qquad $L = M$ 	\\
+		\qquad	\textbf{end while}		\\
+		\qquad \textbf{return} $(U + L) / 2$	\\	
+		\hline
+	\end{tabular}
+	\caption{攀爬机器人方向角测量算法}
+	\label{tbl:algorithm_1}
+\end{table}
+表格的引用： \ref{tbl:algorithm_1} 
+控制表格宽度： \begin{tabular}{|p{1cm}|p{2cm}|p{3cm}|}
+%--------------------------------------------------------------------------------------------------------------------------%
+
+
+%------------------------------------------------  绘制长直线  -------------------------------------------------------------------%
+\rule[水平高度]{长度}{粗细}
+
+例如：
+\rule[0.25\baselineskip]{\textwidth}{1pt}
+\rule[-10pt]{14.3cm}{0.05em}
+
+\baselineskip是单位 距离下面的距离
+%--------------------------------------------------------------------------------------------------------------------------%
+
+
+\end{comment}
+%----------------------------------------**常用功能模板**--------------------------------------------------------------%
+
+\begin{document}
+\maketitle %实际输出论文标题;
+计算机视觉、模式识别和机器学习中的一个关键问题是为手头的任务定义适当的数据表示方式。
+
+表示输入数据的一种方式是找到代表大部分数据方差的子空间。这可以通过使用{\color{blue}{主成分分析（PCA）}}获得。当应用于脸部图像时，PCA产生一组{\color{blue}{特征脸（eigenfaces）}}。这些特征脸是与训练数据的协方差矩阵的最大特征值相关联的特征向量。因此找到的特征向量对应于最小二乘法（LS）解。这确实是表示数据的有效方法，因为它确保维持数据差异，同时消除样本向量中的原始特征（维度）之间不必要的现有相关性。
+
+当目标是分类而不是表示时，LS解决方案可能不会产生最理想的结果。在这种情况下，希望找到一个子空间，该子空间将相同类别的样本向量映射到特征表示中的单个点，并且不同类别的样本向量尽可能远离彼此。为实现这一目标而衍生的技术被称为{\color{blue}{判别分析（DA）}}。
+
+最着名的DA是{\color{blue}{线性判别分析（LDA）}}，可以从R.A.Fisher在1936年建议的想法中得出。当LDA用于找到一组面部图像的子空间表示时，所得到的定义该空间的基向量（basis vectors）称为{\color{blue}{Fisherfaces}}。
+\begin{figure}[!h]
+	\centerline{\includegraphics[width=6cm]{./figures/Fisherfaces.jpg}}
+	\caption{这里显示的是来自一组100个类（目标）的前四个Fisherfaces}
+\end{figure}
+
+\section{Discriminant Scores}
+为了计算Fisherfaces，我们假设每个类中的数据是正态分布的。我们将多元正态分布表示为$N_i(\mu_i，\sum_i)$，其中$\mu_i$为均值，$\sum_i$为协方差矩阵，$f_i(x|\mu_i, \sum_i)$为概率密度函数。
+
+在C类问题中，我们有$N_i(\mu_i，\sum_i)$，其中$i = 1，\cdots，C$。给定这些正态分布及其类别先验概率$P_i$，通过比较所有的对数似然$f_i(x|\mu_i, \sum_i)P_i$来给出测试样本x的分类。也就是，
+\begin{equation}
+	\arg \min_{1\le i \le C}d_i(x)
+\end{equation}
+其中$d_i(x)=(x-\mu_i)^T\sum_i^{-1}(x-\mu_i) + \ln |\sum_i| -2 \ln P_i$被称为每个类的判别得分。由此定义的判别得分产生贝叶斯最优解。
+
+判别得分通常导致类之间的二次分类边界。然而，对于所有协方差矩阵相同的情况，$\sum_i= \sum,\; \forall i$，$d_i$的二次部分消失，产生线性分类器。这些分类器称为{\color{blue}{线性判别基}}，因此，线性判别分析的名称由来。所有协方差相同的情况称为同方差正态分布。
+
+假设C = 2，并且类是同方差正态分布。将样本特征向量投影到与判别得分给出的分类超平面正交的一维子空间上。结果是，在p维的原始空间中和在仅一维的该子空间中的错误分类样本的数量是相同的。这很容易验证。由于分类边界是线性的，所以在空间一侧的所有样本将保留在1维子空间的同一侧。这个重点是R.A. Fisher首次提出的，从而允许我们定义LDA算法和Fisherfaces。
+
+\section{计算Fisherfaces}
+上一节中给出的理论论证显示了如何获得2-class同方差的贝叶斯最优解。一般来说，我们将有两个以上的类。在这种情况下，我们将上述问题重新定义为尽量减少{\color{blue}{类内（within-class）}}差异并最大限度地提高{\color{blue}{类间（between-class）}}距离。
+
+类内差异可以使用类内分散矩阵(scatter matrix)来估计
+\begin{equation}
+S_w =\sum_{j = 1}^C \sum_{i = 1}^{n_j}(x_{ij}-\mu_j)(x_{ij}-\mu_j)^T
+\end{equation}
+其中$x_{ij}$是第j类的第i个样本，$\mu_j$是类j的平均值，$n_j$是类j中的样本数。
+
+类似地，类间差异是使用类间分散矩阵计算的
+\begin{equation}
+S_b =\sum_{j = 1}^C N_j (\mu_j-\mu)(\mu_j-\mu)^T
+\end{equation}
+其中$\mu$表示所有类的平均值。
+
+我们现在想找到那些基本向量V，其中$S_w$被最小化并且$S_b$被最大化。矩阵V的列矢量$v_i$是定义子空间的基本向量。可以如下计算：
+\begin{equation}
+	V_{opt} =\arg \max_V \frac{|V^TS_bV|}{|V^TS_wV|}
+\end{equation}
+
+该问题的解决方案由广义特征值分解给出
+\begin{equation}
+	S_bV = S_wV\Lambda
+\end{equation}
+其中V是（如上所述）特征向量的矩阵，$\Lambda$是相应特征值的对角矩阵。
+
+与非零特征值相关联的V的特征向量是{\color{blue}{Fisherfaces}}。最多有C-1个 Fisherfaces。这可以从$S_b$的定义中容易地看出。注意，在我们的定义中，$S_b$是C个特征向量的组合。任何C个向量定义C-1或更小尺寸的子空间。当这些向量彼此线性相互独立时，该等式成立。
+
+\bibliographystyle{plain}
+\bibliography{articles}
+\end{document}
