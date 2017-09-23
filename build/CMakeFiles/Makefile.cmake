@@ -122,6 +122,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "src/CMakeFiles/FACE.dir/DependInfo.cmake"
-  "test/CMakeFiles/facerec_fisherfaces.dir/DependInfo.cmake"
   "test/CMakeFiles/facerec_eigenfaces.dir/DependInfo.cmake"
+  "test/CMakeFiles/facerec_fisherfaces.dir/DependInfo.cmake"
+  "test/CMakeFiles/facerec_lbph.dir/DependInfo.cmake"
   )

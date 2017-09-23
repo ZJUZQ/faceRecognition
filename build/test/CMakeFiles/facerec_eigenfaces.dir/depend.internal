@@ -3,7 +3,9 @@
 
 test/CMakeFiles/facerec_eigenfaces.dir/facerec_eigenfaces.cpp.o
  ../include/FACE/BasicFaceRecognizer.hpp
+ ../include/FACE/Covar_Eigen.hpp
  ../include/FACE/FaceRecognizer.hpp
+ ../include/FACE/PCA.hpp
  ../include/FACE/common_includes.hpp
  ../include/FACE/predict_collector.hpp
  /home/vortex/zhou_temp_test/faceRecognition/test/facerec_eigenfaces.cpp

@@ -57,9 +57,33 @@ include src/CMakeFiles/FACE.dir/progress.make
 # Include the compile flags for this target's objects.
 include src/CMakeFiles/FACE.dir/flags.make
 
+src/CMakeFiles/FACE.dir/Covar_Eigen.cpp.o: src/CMakeFiles/FACE.dir/flags.make
+src/CMakeFiles/FACE.dir/Covar_Eigen.cpp.o: ../src/Covar_Eigen.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vortex/zhou_temp_test/faceRecognition/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object src/CMakeFiles/FACE.dir/Covar_Eigen.cpp.o"
+	cd /home/vortex/zhou_temp_test/faceRecognition/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FACE.dir/Covar_Eigen.cpp.o -c /home/vortex/zhou_temp_test/faceRecognition/src/Covar_Eigen.cpp
+
+src/CMakeFiles/FACE.dir/Covar_Eigen.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/FACE.dir/Covar_Eigen.cpp.i"
+	cd /home/vortex/zhou_temp_test/faceRecognition/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/vortex/zhou_temp_test/faceRecognition/src/Covar_Eigen.cpp > CMakeFiles/FACE.dir/Covar_Eigen.cpp.i
+
+src/CMakeFiles/FACE.dir/Covar_Eigen.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/FACE.dir/Covar_Eigen.cpp.s"
+	cd /home/vortex/zhou_temp_test/faceRecognition/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/vortex/zhou_temp_test/faceRecognition/src/Covar_Eigen.cpp -o CMakeFiles/FACE.dir/Covar_Eigen.cpp.s
+
+src/CMakeFiles/FACE.dir/Covar_Eigen.cpp.o.requires:
+
+.PHONY : src/CMakeFiles/FACE.dir/Covar_Eigen.cpp.o.requires
+
+src/CMakeFiles/FACE.dir/Covar_Eigen.cpp.o.provides: src/CMakeFiles/FACE.dir/Covar_Eigen.cpp.o.requires
+	$(MAKE) -f src/CMakeFiles/FACE.dir/build.make src/CMakeFiles/FACE.dir/Covar_Eigen.cpp.o.provides.build
+.PHONY : src/CMakeFiles/FACE.dir/Covar_Eigen.cpp.o.provides
+
+src/CMakeFiles/FACE.dir/Covar_Eigen.cpp.o.provides.build: src/CMakeFiles/FACE.dir/Covar_Eigen.cpp.o
+
+
 src/CMakeFiles/FACE.dir/EigenFaces.cpp.o: src/CMakeFiles/FACE.dir/flags.make
 src/CMakeFiles/FACE.dir/EigenFaces.cpp.o: ../src/EigenFaces.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vortex/zhou_temp_test/faceRecognition/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object src/CMakeFiles/FACE.dir/EigenFaces.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vortex/zhou_temp_test/faceRecognition/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object src/CMakeFiles/FACE.dir/EigenFaces.cpp.o"
 	cd /home/vortex/zhou_temp_test/faceRecognition/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FACE.dir/EigenFaces.cpp.o -c /home/vortex/zhou_temp_test/faceRecognition/src/EigenFaces.cpp
 
 src/CMakeFiles/FACE.dir/EigenFaces.cpp.i: cmake_force
@@ -83,7 +107,7 @@ src/CMakeFiles/FACE.dir/EigenFaces.cpp.o.provides.build: src/CMakeFiles/FACE.dir
 
 src/CMakeFiles/FACE.dir/FaceRecognizer.cpp.o: src/CMakeFiles/FACE.dir/flags.make
 src/CMakeFiles/FACE.dir/FaceRecognizer.cpp.o: ../src/FaceRecognizer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vortex/zhou_temp_test/faceRecognition/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object src/CMakeFiles/FACE.dir/FaceRecognizer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vortex/zhou_temp_test/faceRecognition/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object src/CMakeFiles/FACE.dir/FaceRecognizer.cpp.o"
 	cd /home/vortex/zhou_temp_test/faceRecognition/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FACE.dir/FaceRecognizer.cpp.o -c /home/vortex/zhou_temp_test/faceRecognition/src/FaceRecognizer.cpp
 
 src/CMakeFiles/FACE.dir/FaceRecognizer.cpp.i: cmake_force
@@ -107,7 +131,7 @@ src/CMakeFiles/FACE.dir/FaceRecognizer.cpp.o.provides.build: src/CMakeFiles/FACE
 
 src/CMakeFiles/FACE.dir/FisherFaces.cpp.o: src/CMakeFiles/FACE.dir/flags.make
 src/CMakeFiles/FACE.dir/FisherFaces.cpp.o: ../src/FisherFaces.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vortex/zhou_temp_test/faceRecognition/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object src/CMakeFiles/FACE.dir/FisherFaces.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vortex/zhou_temp_test/faceRecognition/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object src/CMakeFiles/FACE.dir/FisherFaces.cpp.o"
 	cd /home/vortex/zhou_temp_test/faceRecognition/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FACE.dir/FisherFaces.cpp.o -c /home/vortex/zhou_temp_test/faceRecognition/src/FisherFaces.cpp
 
 src/CMakeFiles/FACE.dir/FisherFaces.cpp.i: cmake_force
@@ -129,9 +153,81 @@ src/CMakeFiles/FACE.dir/FisherFaces.cpp.o.provides: src/CMakeFiles/FACE.dir/Fish
 src/CMakeFiles/FACE.dir/FisherFaces.cpp.o.provides.build: src/CMakeFiles/FACE.dir/FisherFaces.cpp.o
 
 
+src/CMakeFiles/FACE.dir/LBPHFaces.cpp.o: src/CMakeFiles/FACE.dir/flags.make
+src/CMakeFiles/FACE.dir/LBPHFaces.cpp.o: ../src/LBPHFaces.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vortex/zhou_temp_test/faceRecognition/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object src/CMakeFiles/FACE.dir/LBPHFaces.cpp.o"
+	cd /home/vortex/zhou_temp_test/faceRecognition/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FACE.dir/LBPHFaces.cpp.o -c /home/vortex/zhou_temp_test/faceRecognition/src/LBPHFaces.cpp
+
+src/CMakeFiles/FACE.dir/LBPHFaces.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/FACE.dir/LBPHFaces.cpp.i"
+	cd /home/vortex/zhou_temp_test/faceRecognition/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/vortex/zhou_temp_test/faceRecognition/src/LBPHFaces.cpp > CMakeFiles/FACE.dir/LBPHFaces.cpp.i
+
+src/CMakeFiles/FACE.dir/LBPHFaces.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/FACE.dir/LBPHFaces.cpp.s"
+	cd /home/vortex/zhou_temp_test/faceRecognition/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/vortex/zhou_temp_test/faceRecognition/src/LBPHFaces.cpp -o CMakeFiles/FACE.dir/LBPHFaces.cpp.s
+
+src/CMakeFiles/FACE.dir/LBPHFaces.cpp.o.requires:
+
+.PHONY : src/CMakeFiles/FACE.dir/LBPHFaces.cpp.o.requires
+
+src/CMakeFiles/FACE.dir/LBPHFaces.cpp.o.provides: src/CMakeFiles/FACE.dir/LBPHFaces.cpp.o.requires
+	$(MAKE) -f src/CMakeFiles/FACE.dir/build.make src/CMakeFiles/FACE.dir/LBPHFaces.cpp.o.provides.build
+.PHONY : src/CMakeFiles/FACE.dir/LBPHFaces.cpp.o.provides
+
+src/CMakeFiles/FACE.dir/LBPHFaces.cpp.o.provides.build: src/CMakeFiles/FACE.dir/LBPHFaces.cpp.o
+
+
+src/CMakeFiles/FACE.dir/PCA.cpp.o: src/CMakeFiles/FACE.dir/flags.make
+src/CMakeFiles/FACE.dir/PCA.cpp.o: ../src/PCA.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vortex/zhou_temp_test/faceRecognition/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object src/CMakeFiles/FACE.dir/PCA.cpp.o"
+	cd /home/vortex/zhou_temp_test/faceRecognition/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FACE.dir/PCA.cpp.o -c /home/vortex/zhou_temp_test/faceRecognition/src/PCA.cpp
+
+src/CMakeFiles/FACE.dir/PCA.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/FACE.dir/PCA.cpp.i"
+	cd /home/vortex/zhou_temp_test/faceRecognition/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/vortex/zhou_temp_test/faceRecognition/src/PCA.cpp > CMakeFiles/FACE.dir/PCA.cpp.i
+
+src/CMakeFiles/FACE.dir/PCA.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/FACE.dir/PCA.cpp.s"
+	cd /home/vortex/zhou_temp_test/faceRecognition/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/vortex/zhou_temp_test/faceRecognition/src/PCA.cpp -o CMakeFiles/FACE.dir/PCA.cpp.s
+
+src/CMakeFiles/FACE.dir/PCA.cpp.o.requires:
+
+.PHONY : src/CMakeFiles/FACE.dir/PCA.cpp.o.requires
+
+src/CMakeFiles/FACE.dir/PCA.cpp.o.provides: src/CMakeFiles/FACE.dir/PCA.cpp.o.requires
+	$(MAKE) -f src/CMakeFiles/FACE.dir/build.make src/CMakeFiles/FACE.dir/PCA.cpp.o.provides.build
+.PHONY : src/CMakeFiles/FACE.dir/PCA.cpp.o.provides
+
+src/CMakeFiles/FACE.dir/PCA.cpp.o.provides.build: src/CMakeFiles/FACE.dir/PCA.cpp.o
+
+
+src/CMakeFiles/FACE.dir/elbp.cpp.o: src/CMakeFiles/FACE.dir/flags.make
+src/CMakeFiles/FACE.dir/elbp.cpp.o: ../src/elbp.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vortex/zhou_temp_test/faceRecognition/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object src/CMakeFiles/FACE.dir/elbp.cpp.o"
+	cd /home/vortex/zhou_temp_test/faceRecognition/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FACE.dir/elbp.cpp.o -c /home/vortex/zhou_temp_test/faceRecognition/src/elbp.cpp
+
+src/CMakeFiles/FACE.dir/elbp.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/FACE.dir/elbp.cpp.i"
+	cd /home/vortex/zhou_temp_test/faceRecognition/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/vortex/zhou_temp_test/faceRecognition/src/elbp.cpp > CMakeFiles/FACE.dir/elbp.cpp.i
+
+src/CMakeFiles/FACE.dir/elbp.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/FACE.dir/elbp.cpp.s"
+	cd /home/vortex/zhou_temp_test/faceRecognition/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/vortex/zhou_temp_test/faceRecognition/src/elbp.cpp -o CMakeFiles/FACE.dir/elbp.cpp.s
+
+src/CMakeFiles/FACE.dir/elbp.cpp.o.requires:
+
+.PHONY : src/CMakeFiles/FACE.dir/elbp.cpp.o.requires
+
+src/CMakeFiles/FACE.dir/elbp.cpp.o.provides: src/CMakeFiles/FACE.dir/elbp.cpp.o.requires
+	$(MAKE) -f src/CMakeFiles/FACE.dir/build.make src/CMakeFiles/FACE.dir/elbp.cpp.o.provides.build
+.PHONY : src/CMakeFiles/FACE.dir/elbp.cpp.o.provides
+
+src/CMakeFiles/FACE.dir/elbp.cpp.o.provides.build: src/CMakeFiles/FACE.dir/elbp.cpp.o
+
+
 src/CMakeFiles/FACE.dir/predict_collector.cpp.o: src/CMakeFiles/FACE.dir/flags.make
 src/CMakeFiles/FACE.dir/predict_collector.cpp.o: ../src/predict_collector.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vortex/zhou_temp_test/faceRecognition/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object src/CMakeFiles/FACE.dir/predict_collector.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vortex/zhou_temp_test/faceRecognition/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object src/CMakeFiles/FACE.dir/predict_collector.cpp.o"
 	cd /home/vortex/zhou_temp_test/faceRecognition/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FACE.dir/predict_collector.cpp.o -c /home/vortex/zhou_temp_test/faceRecognition/src/predict_collector.cpp
 
 src/CMakeFiles/FACE.dir/predict_collector.cpp.i: cmake_force
@@ -155,17 +251,25 @@ src/CMakeFiles/FACE.dir/predict_collector.cpp.o.provides.build: src/CMakeFiles/F
 
 # Object files for target FACE
 FACE_OBJECTS = \
+"CMakeFiles/FACE.dir/Covar_Eigen.cpp.o" \
 "CMakeFiles/FACE.dir/EigenFaces.cpp.o" \
 "CMakeFiles/FACE.dir/FaceRecognizer.cpp.o" \
 "CMakeFiles/FACE.dir/FisherFaces.cpp.o" \
+"CMakeFiles/FACE.dir/LBPHFaces.cpp.o" \
+"CMakeFiles/FACE.dir/PCA.cpp.o" \
+"CMakeFiles/FACE.dir/elbp.cpp.o" \
 "CMakeFiles/FACE.dir/predict_collector.cpp.o"
 
 # External object files for target FACE
 FACE_EXTERNAL_OBJECTS =
 
+../lib/libFACE.so: src/CMakeFiles/FACE.dir/Covar_Eigen.cpp.o
 ../lib/libFACE.so: src/CMakeFiles/FACE.dir/EigenFaces.cpp.o
 ../lib/libFACE.so: src/CMakeFiles/FACE.dir/FaceRecognizer.cpp.o
 ../lib/libFACE.so: src/CMakeFiles/FACE.dir/FisherFaces.cpp.o
+../lib/libFACE.so: src/CMakeFiles/FACE.dir/LBPHFaces.cpp.o
+../lib/libFACE.so: src/CMakeFiles/FACE.dir/PCA.cpp.o
+../lib/libFACE.so: src/CMakeFiles/FACE.dir/elbp.cpp.o
 ../lib/libFACE.so: src/CMakeFiles/FACE.dir/predict_collector.cpp.o
 ../lib/libFACE.so: src/CMakeFiles/FACE.dir/build.make
 ../lib/libFACE.so: /opt/ros/kinetic/lib/libopencv_stitching3.so.3.2.0
@@ -211,7 +315,7 @@ FACE_EXTERNAL_OBJECTS =
 ../lib/libFACE.so: /opt/ros/kinetic/lib/libopencv_imgproc3.so.3.2.0
 ../lib/libFACE.so: /opt/ros/kinetic/lib/libopencv_core3.so.3.2.0
 ../lib/libFACE.so: src/CMakeFiles/FACE.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/vortex/zhou_temp_test/faceRecognition/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX shared library ../../lib/libFACE.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/vortex/zhou_temp_test/faceRecognition/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX shared library ../../lib/libFACE.so"
 	cd /home/vortex/zhou_temp_test/faceRecognition/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/FACE.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -219,9 +323,13 @@ src/CMakeFiles/FACE.dir/build: ../lib/libFACE.so
 
 .PHONY : src/CMakeFiles/FACE.dir/build
 
+src/CMakeFiles/FACE.dir/requires: src/CMakeFiles/FACE.dir/Covar_Eigen.cpp.o.requires
 src/CMakeFiles/FACE.dir/requires: src/CMakeFiles/FACE.dir/EigenFaces.cpp.o.requires
 src/CMakeFiles/FACE.dir/requires: src/CMakeFiles/FACE.dir/FaceRecognizer.cpp.o.requires
 src/CMakeFiles/FACE.dir/requires: src/CMakeFiles/FACE.dir/FisherFaces.cpp.o.requires
+src/CMakeFiles/FACE.dir/requires: src/CMakeFiles/FACE.dir/LBPHFaces.cpp.o.requires
+src/CMakeFiles/FACE.dir/requires: src/CMakeFiles/FACE.dir/PCA.cpp.o.requires
+src/CMakeFiles/FACE.dir/requires: src/CMakeFiles/FACE.dir/elbp.cpp.o.requires
 src/CMakeFiles/FACE.dir/requires: src/CMakeFiles/FACE.dir/predict_collector.cpp.o.requires
 
 .PHONY : src/CMakeFiles/FACE.dir/requires

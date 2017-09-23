@@ -49,12 +49,12 @@ void Eigenfaces::train( cv::InputArrayOfArrays _src, cv::InputArray _local_label
         _num_components = n;
 
     // perform the PCA:      cv::PCA (InputArray data, InputArray mean, int flags, int maxComponents=0)
-    cv::PCA pca( data, cv::Mat(), cv::PCA::DATA_AS_ROW, _num_components ); // DATA_AS_ROW: indicates that the input samples are stored as matrix rows 
+    PCA pca( data, cv::Mat(), PCA::DATA_AS_ROW, _num_components ); // DATA_AS_ROW: indicates that the input samples are stored as matrix rows 
 
     // copy the PCA results
-    _mean = pca.mean.reshape( 1, 1 ); // store the mean vector
-    _eigenvalues = pca.eigenvalues.clone(); // eigenvalues by row
-    cv::transpose( pca.eigenvectors, _eigenvectors ); // eigenvectors by column
+    _mean = pca.m_mean.reshape( 1, 1 ); // store the mean vector
+    _eigenvalues = pca.m_eigenvalues.clone(); // eigenvalues by row
+    cv::transpose( pca.m_eigenvectors, _eigenvectors ); // eigenvectors by column
 
     // store labels for prediction
     _labels = labels.clone();

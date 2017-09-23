@@ -125,6 +125,33 @@ FACE/fast:
 	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f src/CMakeFiles/FACE.dir/build.make src/CMakeFiles/FACE.dir/build
 .PHONY : FACE/fast
 
+Covar_Eigen.o: Covar_Eigen.cpp.o
+
+.PHONY : Covar_Eigen.o
+
+# target to build an object file
+Covar_Eigen.cpp.o:
+	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f src/CMakeFiles/FACE.dir/build.make src/CMakeFiles/FACE.dir/Covar_Eigen.cpp.o
+.PHONY : Covar_Eigen.cpp.o
+
+Covar_Eigen.i: Covar_Eigen.cpp.i
+
+.PHONY : Covar_Eigen.i
+
+# target to preprocess a source file
+Covar_Eigen.cpp.i:
+	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f src/CMakeFiles/FACE.dir/build.make src/CMakeFiles/FACE.dir/Covar_Eigen.cpp.i
+.PHONY : Covar_Eigen.cpp.i
+
+Covar_Eigen.s: Covar_Eigen.cpp.s
+
+.PHONY : Covar_Eigen.s
+
+# target to generate assembly for a file
+Covar_Eigen.cpp.s:
+	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f src/CMakeFiles/FACE.dir/build.make src/CMakeFiles/FACE.dir/Covar_Eigen.cpp.s
+.PHONY : Covar_Eigen.cpp.s
+
 EigenFaces.o: EigenFaces.cpp.o
 
 .PHONY : EigenFaces.o
@@ -206,6 +233,87 @@ FisherFaces.cpp.s:
 	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f src/CMakeFiles/FACE.dir/build.make src/CMakeFiles/FACE.dir/FisherFaces.cpp.s
 .PHONY : FisherFaces.cpp.s
 
+LBPHFaces.o: LBPHFaces.cpp.o
+
+.PHONY : LBPHFaces.o
+
+# target to build an object file
+LBPHFaces.cpp.o:
+	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f src/CMakeFiles/FACE.dir/build.make src/CMakeFiles/FACE.dir/LBPHFaces.cpp.o
+.PHONY : LBPHFaces.cpp.o
+
+LBPHFaces.i: LBPHFaces.cpp.i
+
+.PHONY : LBPHFaces.i
+
+# target to preprocess a source file
+LBPHFaces.cpp.i:
+	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f src/CMakeFiles/FACE.dir/build.make src/CMakeFiles/FACE.dir/LBPHFaces.cpp.i
+.PHONY : LBPHFaces.cpp.i
+
+LBPHFaces.s: LBPHFaces.cpp.s
+
+.PHONY : LBPHFaces.s
+
+# target to generate assembly for a file
+LBPHFaces.cpp.s:
+	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f src/CMakeFiles/FACE.dir/build.make src/CMakeFiles/FACE.dir/LBPHFaces.cpp.s
+.PHONY : LBPHFaces.cpp.s
+
+PCA.o: PCA.cpp.o
+
+.PHONY : PCA.o
+
+# target to build an object file
+PCA.cpp.o:
+	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f src/CMakeFiles/FACE.dir/build.make src/CMakeFiles/FACE.dir/PCA.cpp.o
+.PHONY : PCA.cpp.o
+
+PCA.i: PCA.cpp.i
+
+.PHONY : PCA.i
+
+# target to preprocess a source file
+PCA.cpp.i:
+	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f src/CMakeFiles/FACE.dir/build.make src/CMakeFiles/FACE.dir/PCA.cpp.i
+.PHONY : PCA.cpp.i
+
+PCA.s: PCA.cpp.s
+
+.PHONY : PCA.s
+
+# target to generate assembly for a file
+PCA.cpp.s:
+	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f src/CMakeFiles/FACE.dir/build.make src/CMakeFiles/FACE.dir/PCA.cpp.s
+.PHONY : PCA.cpp.s
+
+elbp.o: elbp.cpp.o
+
+.PHONY : elbp.o
+
+# target to build an object file
+elbp.cpp.o:
+	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f src/CMakeFiles/FACE.dir/build.make src/CMakeFiles/FACE.dir/elbp.cpp.o
+.PHONY : elbp.cpp.o
+
+elbp.i: elbp.cpp.i
+
+.PHONY : elbp.i
+
+# target to preprocess a source file
+elbp.cpp.i:
+	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f src/CMakeFiles/FACE.dir/build.make src/CMakeFiles/FACE.dir/elbp.cpp.i
+.PHONY : elbp.cpp.i
+
+elbp.s: elbp.cpp.s
+
+.PHONY : elbp.s
+
+# target to generate assembly for a file
+elbp.cpp.s:
+	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f src/CMakeFiles/FACE.dir/build.make src/CMakeFiles/FACE.dir/elbp.cpp.s
+.PHONY : elbp.cpp.s
+
 predict_collector.o: predict_collector.cpp.o
 
 .PHONY : predict_collector.o
@@ -242,6 +350,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... FACE"
+	@echo "... Covar_Eigen.o"
+	@echo "... Covar_Eigen.i"
+	@echo "... Covar_Eigen.s"
 	@echo "... EigenFaces.o"
 	@echo "... EigenFaces.i"
 	@echo "... EigenFaces.s"
@@ -251,6 +362,15 @@ help:
 	@echo "... FisherFaces.o"
 	@echo "... FisherFaces.i"
 	@echo "... FisherFaces.s"
+	@echo "... LBPHFaces.o"
+	@echo "... LBPHFaces.i"
+	@echo "... LBPHFaces.s"
+	@echo "... PCA.o"
+	@echo "... PCA.i"
+	@echo "... PCA.s"
+	@echo "... elbp.o"
+	@echo "... elbp.i"
+	@echo "... elbp.s"
 	@echo "... predict_collector.o"
 	@echo "... predict_collector.i"
 	@echo "... predict_collector.s"

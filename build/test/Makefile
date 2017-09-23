@@ -111,6 +111,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+test/CMakeFiles/facerec_eigenfaces.dir/rule:
+	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/facerec_eigenfaces.dir/rule
+.PHONY : test/CMakeFiles/facerec_eigenfaces.dir/rule
+
+# Convenience name for target.
+facerec_eigenfaces: test/CMakeFiles/facerec_eigenfaces.dir/rule
+
+.PHONY : facerec_eigenfaces
+
+# fast build rule for target.
+facerec_eigenfaces/fast:
+	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f test/CMakeFiles/facerec_eigenfaces.dir/build.make test/CMakeFiles/facerec_eigenfaces.dir/build
+.PHONY : facerec_eigenfaces/fast
+
+# Convenience name for target.
 test/CMakeFiles/facerec_fisherfaces.dir/rule:
 	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/facerec_fisherfaces.dir/rule
 .PHONY : test/CMakeFiles/facerec_fisherfaces.dir/rule
@@ -126,19 +141,19 @@ facerec_fisherfaces/fast:
 .PHONY : facerec_fisherfaces/fast
 
 # Convenience name for target.
-test/CMakeFiles/facerec_eigenfaces.dir/rule:
-	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/facerec_eigenfaces.dir/rule
-.PHONY : test/CMakeFiles/facerec_eigenfaces.dir/rule
+test/CMakeFiles/facerec_lbph.dir/rule:
+	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/facerec_lbph.dir/rule
+.PHONY : test/CMakeFiles/facerec_lbph.dir/rule
 
 # Convenience name for target.
-facerec_eigenfaces: test/CMakeFiles/facerec_eigenfaces.dir/rule
+facerec_lbph: test/CMakeFiles/facerec_lbph.dir/rule
 
-.PHONY : facerec_eigenfaces
+.PHONY : facerec_lbph
 
 # fast build rule for target.
-facerec_eigenfaces/fast:
-	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f test/CMakeFiles/facerec_eigenfaces.dir/build.make test/CMakeFiles/facerec_eigenfaces.dir/build
-.PHONY : facerec_eigenfaces/fast
+facerec_lbph/fast:
+	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f test/CMakeFiles/facerec_lbph.dir/build.make test/CMakeFiles/facerec_lbph.dir/build
+.PHONY : facerec_lbph/fast
 
 facerec_eigenfaces.o: facerec_eigenfaces.cpp.o
 
@@ -194,6 +209,33 @@ facerec_fisherfaces.cpp.s:
 	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f test/CMakeFiles/facerec_fisherfaces.dir/build.make test/CMakeFiles/facerec_fisherfaces.dir/facerec_fisherfaces.cpp.s
 .PHONY : facerec_fisherfaces.cpp.s
 
+facerec_lbph.o: facerec_lbph.cpp.o
+
+.PHONY : facerec_lbph.o
+
+# target to build an object file
+facerec_lbph.cpp.o:
+	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f test/CMakeFiles/facerec_lbph.dir/build.make test/CMakeFiles/facerec_lbph.dir/facerec_lbph.cpp.o
+.PHONY : facerec_lbph.cpp.o
+
+facerec_lbph.i: facerec_lbph.cpp.i
+
+.PHONY : facerec_lbph.i
+
+# target to preprocess a source file
+facerec_lbph.cpp.i:
+	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f test/CMakeFiles/facerec_lbph.dir/build.make test/CMakeFiles/facerec_lbph.dir/facerec_lbph.cpp.i
+.PHONY : facerec_lbph.cpp.i
+
+facerec_lbph.s: facerec_lbph.cpp.s
+
+.PHONY : facerec_lbph.s
+
+# target to generate assembly for a file
+facerec_lbph.cpp.s:
+	cd /home/vortex/zhou_temp_test/faceRecognition/build && $(MAKE) -f test/CMakeFiles/facerec_lbph.dir/build.make test/CMakeFiles/facerec_lbph.dir/facerec_lbph.cpp.s
+.PHONY : facerec_lbph.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -201,15 +243,19 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... facerec_eigenfaces"
 	@echo "... rebuild_cache"
 	@echo "... facerec_fisherfaces"
-	@echo "... facerec_eigenfaces"
+	@echo "... facerec_lbph"
 	@echo "... facerec_eigenfaces.o"
 	@echo "... facerec_eigenfaces.i"
 	@echo "... facerec_eigenfaces.s"
 	@echo "... facerec_fisherfaces.o"
 	@echo "... facerec_fisherfaces.i"
 	@echo "... facerec_fisherfaces.s"
+	@echo "... facerec_lbph.o"
+	@echo "... facerec_lbph.i"
+	@echo "... facerec_lbph.s"
 .PHONY : help
 
 

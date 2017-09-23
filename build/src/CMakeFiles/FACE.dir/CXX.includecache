@@ -11,12 +11,32 @@ FACE/common_includes.hpp
 ../include/FACE/FACE/common_includes.hpp
 FACE/FaceRecognizer.hpp
 ../include/FACE/FACE/FaceRecognizer.hpp
+FACE/PCA.hpp
+../include/FACE/FACE/PCA.hpp
+
+../include/FACE/Covar_Eigen.hpp
+FACE/common_includes.hpp
+../include/FACE/FACE/common_includes.hpp
 
 ../include/FACE/FaceRecognizer.hpp
 FACE/FaceRecognizer.hpp
 ../include/FACE/FACE/FaceRecognizer.hpp
 FACE/predict_collector.hpp
 ../include/FACE/FACE/predict_collector.hpp
+
+../include/FACE/LBPHFaceRecognizer.hpp
+FACE/common_includes.hpp
+../include/FACE/FACE/common_includes.hpp
+FACE/FaceRecognizer.hpp
+../include/FACE/FACE/FaceRecognizer.hpp
+FACE/elbp.hpp
+../include/FACE/FACE/elbp.hpp
+
+../include/FACE/PCA.hpp
+FACE/common_includes.hpp
+../include/FACE/FACE/common_includes.hpp
+FACE/Covar_Eigen.hpp
+../include/FACE/FACE/Covar_Eigen.hpp
 
 ../include/FACE/common_includes.hpp
 iostream
@@ -31,6 +51,8 @@ algorithm
 -
 set
 -
+math.h
+-
 opencv2/core/core.hpp
 -
 opencv2/imgproc/imgproc.hpp
@@ -38,9 +60,17 @@ opencv2/imgproc/imgproc.hpp
 opencv2/highgui/highgui.hpp
 -
 
+../include/FACE/elbp.hpp
+FACE/common_includes.hpp
+../include/FACE/FACE/common_includes.hpp
+
 ../include/FACE/predict_collector.hpp
 FACE/common_includes.hpp
 ../include/FACE/FACE/common_includes.hpp
+
+/home/vortex/zhou_temp_test/faceRecognition/src/Covar_Eigen.cpp
+FACE/Covar_Eigen.hpp
+/home/vortex/zhou_temp_test/faceRecognition/src/FACE/Covar_Eigen.hpp
 
 /home/vortex/zhou_temp_test/faceRecognition/src/EigenFaces.cpp
 FACE/BasicFaceRecognizer.hpp
@@ -53,6 +83,18 @@ FACE/FaceRecognizer.hpp
 /home/vortex/zhou_temp_test/faceRecognition/src/FisherFaces.cpp
 FACE/BasicFaceRecognizer.hpp
 /home/vortex/zhou_temp_test/faceRecognition/src/FACE/BasicFaceRecognizer.hpp
+
+/home/vortex/zhou_temp_test/faceRecognition/src/LBPHFaces.cpp
+FACE/LBPHFaceRecognizer.hpp
+/home/vortex/zhou_temp_test/faceRecognition/src/FACE/LBPHFaceRecognizer.hpp
+
+/home/vortex/zhou_temp_test/faceRecognition/src/PCA.cpp
+FACE/PCA.hpp
+/home/vortex/zhou_temp_test/faceRecognition/src/FACE/PCA.hpp
+
+/home/vortex/zhou_temp_test/faceRecognition/src/elbp.cpp
+FACE/elbp.hpp
+/home/vortex/zhou_temp_test/faceRecognition/src/FACE/elbp.hpp
 
 /home/vortex/zhou_temp_test/faceRecognition/src/predict_collector.cpp
 FACE/predict_collector.hpp

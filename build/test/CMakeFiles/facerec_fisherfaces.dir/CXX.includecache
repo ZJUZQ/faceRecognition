@@ -11,12 +11,24 @@ FACE/common_includes.hpp
 ../include/FACE/FACE/common_includes.hpp
 FACE/FaceRecognizer.hpp
 ../include/FACE/FACE/FaceRecognizer.hpp
+FACE/PCA.hpp
+../include/FACE/FACE/PCA.hpp
+
+../include/FACE/Covar_Eigen.hpp
+FACE/common_includes.hpp
+../include/FACE/FACE/common_includes.hpp
 
 ../include/FACE/FaceRecognizer.hpp
 FACE/FaceRecognizer.hpp
 ../include/FACE/FACE/FaceRecognizer.hpp
 FACE/predict_collector.hpp
 ../include/FACE/FACE/predict_collector.hpp
+
+../include/FACE/PCA.hpp
+FACE/common_includes.hpp
+../include/FACE/FACE/common_includes.hpp
+FACE/Covar_Eigen.hpp
+../include/FACE/FACE/Covar_Eigen.hpp
 
 ../include/FACE/common_includes.hpp
 iostream
@@ -30,6 +42,8 @@ utility
 algorithm
 -
 set
+-
+math.h
 -
 opencv2/core/core.hpp
 -

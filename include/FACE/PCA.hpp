@@ -2,6 +2,7 @@
 #define FACE_PAC_HPP
 
 #include "FACE/common_includes.hpp"
+#include "FACE/Covar_Eigen.hpp"
 
 namespace FACE{
 
@@ -152,6 +153,17 @@ public:
     cv::Mat m_eigenvalues; //!< eigenvalues of the covariation matrix
     cv::Mat m_mean; //!< mean value subtracted before the projection and added after the back projection
 };
+
+
+void PCACompute( cv::InputArray data, cv::InputOutputArray mean,
+                 cv::OutputArray eigenvectors, int maxComponents );
+
+void PCACompute( cv::InputArray data, cv::InputOutputArray mean,
+                 cv::OutputArray eigenvectors, double retainedVariance);
+
+void PCAProject( cv::InputArray data, cv::InputArray mean, cv::InputArray eigenvectors, cv::OutputArray result );
+
+void PCABackProject( cv::InputArray data, cv::InputArray mean, cv::InputArray eigenvectors, cv::OutputArray result );                                 
 
 }; /* namespace FACE */
 

@@ -124,6 +124,19 @@ FACE/fast:
 .PHONY : FACE/fast
 
 #=============================================================================
+# Target rules for targets named facerec_eigenfaces
+
+# Build rule for target.
+facerec_eigenfaces: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 facerec_eigenfaces
+.PHONY : facerec_eigenfaces
+
+# fast build rule for target.
+facerec_eigenfaces/fast:
+	$(MAKE) -f test/CMakeFiles/facerec_eigenfaces.dir/build.make test/CMakeFiles/facerec_eigenfaces.dir/build
+.PHONY : facerec_eigenfaces/fast
+
+#=============================================================================
 # Target rules for targets named facerec_fisherfaces
 
 # Build rule for target.
@@ -137,17 +150,17 @@ facerec_fisherfaces/fast:
 .PHONY : facerec_fisherfaces/fast
 
 #=============================================================================
-# Target rules for targets named facerec_eigenfaces
+# Target rules for targets named facerec_lbph
 
 # Build rule for target.
-facerec_eigenfaces: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 facerec_eigenfaces
-.PHONY : facerec_eigenfaces
+facerec_lbph: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 facerec_lbph
+.PHONY : facerec_lbph
 
 # fast build rule for target.
-facerec_eigenfaces/fast:
-	$(MAKE) -f test/CMakeFiles/facerec_eigenfaces.dir/build.make test/CMakeFiles/facerec_eigenfaces.dir/build
-.PHONY : facerec_eigenfaces/fast
+facerec_lbph/fast:
+	$(MAKE) -f test/CMakeFiles/facerec_lbph.dir/build.make test/CMakeFiles/facerec_lbph.dir/build
+.PHONY : facerec_lbph/fast
 
 # Help Target
 help:
@@ -158,8 +171,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... FACE"
-	@echo "... facerec_fisherfaces"
 	@echo "... facerec_eigenfaces"
+	@echo "... facerec_fisherfaces"
+	@echo "... facerec_lbph"
 .PHONY : help
 
 

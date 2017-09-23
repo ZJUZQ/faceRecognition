@@ -4,6 +4,7 @@
 /home/vortex/zhou_temp_test/faceRecognition/build/src/CMakeFiles/rebuild_cache.dir
 /home/vortex/zhou_temp_test/faceRecognition/build/src/CMakeFiles/FACE.dir
 /home/vortex/zhou_temp_test/faceRecognition/build/test/CMakeFiles/edit_cache.dir
+/home/vortex/zhou_temp_test/faceRecognition/build/test/CMakeFiles/facerec_eigenfaces.dir
 /home/vortex/zhou_temp_test/faceRecognition/build/test/CMakeFiles/rebuild_cache.dir
 /home/vortex/zhou_temp_test/faceRecognition/build/test/CMakeFiles/facerec_fisherfaces.dir
-/home/vortex/zhou_temp_test/faceRecognition/build/test/CMakeFiles/facerec_eigenfaces.dir
+/home/vortex/zhou_temp_test/faceRecognition/build/test/CMakeFiles/facerec_lbph.dir

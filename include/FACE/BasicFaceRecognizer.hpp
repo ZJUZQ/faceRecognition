@@ -3,6 +3,7 @@
 
 #include "FACE/common_includes.hpp"
 #include "FACE/FaceRecognizer.hpp"
+#include "FACE/PCA.hpp"
 
 namespace FACE{
 
